@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://i.imgur.com/TmPcw2t.png">
 <meta property="og:image" content="https://i.imgur.com/Qlhe23r.png">
 <meta property="og:image" content="https://i.imgur.com/HsGtGsM.png">
-<meta property="og:updated_time" content="2018-02-24T12:21:09.728Z">
+<meta property="og:updated_time" content="2018-02-24T12:32:48.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Excel解析和生成">
 <meta name="twitter:description" content="1.导入maven坐标基于 maven 坐标导入 POI 支持 poi… jar 解析 HSSF poi ooxml .. jar 解析 XSSF （以来 POI 包 ） 解析 Excel 逻辑工作薄 --- sheet --- row --- cell 基于struts2进行文件上传的并解析 // 接收上传文件 private File file;  public void setFile(Fi">
@@ -475,9 +475,12 @@ POI 生成 HSSF （xls）和 XSSF （xlsx）
 
         return NONE;
     }
-</code></pre><p>##生成pdf文件</p>
-<p>###使用java原生代码生成pdf文件<br>        @Action(“report_exportPdf”)<br>        public String exportPdf() throws IOException, DocumentException {<br>            // 查询出 满足当前条件 结果数据<br>            List<waybill> wayBills = wayBillService.findWayBills(model);</waybill></p>
-<pre><code>    // 下载导出
+</code></pre><h2 id="生成pdf文件"><a href="#生成pdf文件" class="headerlink" title="生成pdf文件"></a>生成pdf文件</h2><h3 id="使用java原生代码生成pdf文件"><a href="#使用java原生代码生成pdf文件" class="headerlink" title="使用java原生代码生成pdf文件"></a>使用java原生代码生成pdf文件</h3><pre><code>@Action(&quot;report_exportPdf&quot;)
+public String exportPdf() throws IOException, DocumentException {
+    // 查询出 满足当前条件 结果数据
+    List&lt;WayBill&gt; wayBills = wayBillService.findWayBills(model);
+
+    // 下载导出
     // 设置头信息
     ServletActionContext.getResponse().setContentType(&quot;application/pdf&quot;);
     String filename = &quot;运单数据.pdf&quot;;
@@ -536,8 +539,13 @@ private Cell buildCell(String content, Font font)
     Phrase phrase = new Phrase(content, font);
     return new Cell(phrase);
 }
-</code></pre><p>###使用jasperReport技术生成pdf文件<br>        @Action(“report_exportJasperPdf”)<br>        public String exportJasperPdf() throws IOException, DocumentException,<br>                JRException, SQLException {<br>            // 查询出 满足当前条件 结果数据<br>            List<waybill> wayBills = wayBillService.findWayBills(model);</waybill></p>
-<pre><code>        // 下载导出
+</code></pre><h3 id="使用jasperReport技术生成pdf文件"><a href="#使用jasperReport技术生成pdf文件" class="headerlink" title="使用jasperReport技术生成pdf文件"></a>使用jasperReport技术生成pdf文件</h3><pre><code>    @Action(&quot;report_exportJasperPdf&quot;)
+    public String exportJasperPdf() throws IOException, DocumentException,
+            JRException, SQLException {
+        // 查询出 满足当前条件 结果数据
+        List&lt;WayBill&gt; wayBills = wayBillService.findWayBills(model);
+
+        // 下载导出
         // 设置头信息
         ServletActionContext.getResponse().setContentType(&quot;application/pdf&quot;);
         String filename = &quot;运单数据.pdf&quot;;
@@ -571,18 +579,25 @@ private Cell buildCell(String content, Font font)
         return NONE;
     }
 }
-</code></pre><p>##附加ireport工具使用</p>
-<p>##IReport 报表模板简介和设置中文生成</p>
-<p>###1、 新建 JasperReport 模板文件 .jrxml</p>
-<p>###2、 设置默认语言<br>    对输入中文内容 设置组件属性<br><img src="https://i.imgur.com/H4eh44k.png" alt=""></p>
+</code></pre><h2 id="附加ireport工具使用"><a href="#附加ireport工具使用" class="headerlink" title="附加ireport工具使用"></a>附加ireport工具使用</h2><h2 id="IReport-报表模板简介和设置中文生成"><a href="#IReport-报表模板简介和设置中文生成" class="headerlink" title="IReport 报表模板简介和设置中文生成"></a>IReport 报表模板简介和设置中文生成</h2><h3 id="1、新建-JasperReport-模板文件-jrxml"><a href="#1、新建-JasperReport-模板文件-jrxml" class="headerlink" title="1、新建 JasperReport 模板文件 .jrxml"></a>1、新建 JasperReport 模板文件 .jrxml</h3><h3 id="2、设置默认语言"><a href="#2、设置默认语言" class="headerlink" title="2、设置默认语言"></a>2、设置默认语言</h3><pre><code>对输入中文内容 设置组件属性
+</code></pre><p><img src="https://i.imgur.com/H4eh44k.png" alt=""></p>
 <pre><code>在 IReport 引入 ITextAsian.jar 字库
 在工具选项中    
 </code></pre><p><img src="https://i.imgur.com/hmOetdY.png" alt=""></p>
-<p>###3、 了解报表模板结构<br>    Title: 报表标题<br>    PageHeader: 页眉<br>    ColumnHeader: 表格列标题<br>    Detail： 表格数据内容<br>    ColumnFooter： 表格页脚<br>    PageFooter： 页脚<br>    Summary: 摘要</p>
-<p>###4、 常用报表组件<br><img src="https://i.imgur.com/lZrtNKt.png" alt=""></p>
+<h3 id="3、-了解报表模板结构"><a href="#3、-了解报表模板结构" class="headerlink" title="3、 了解报表模板结构"></a>3、 了解报表模板结构</h3><pre><code>Title: 报表标题
+PageHeader: 页眉
+ColumnHeader: 表格列标题
+Detail： 表格数据内容
+ColumnFooter： 表格页脚
+PageFooter： 页脚
+Summary: 摘要
+</code></pre><h3 id="4、-常用报表组件"><a href="#4、-常用报表组件" class="headerlink" title="4、 常用报表组件"></a>4、 常用报表组件</h3><p><img src="https://i.imgur.com/lZrtNKt.png" alt=""></p>
 <pre><code>设置预览格式为 PDF
-</code></pre><p>##4.3． IReport 配置数据库连接，基于数据表生成报表<br>    1、 点击按钮配置数据库连接<br>    新建 JDBC 连接<br><img src="https://i.imgur.com/VvJwgM5.png" alt=""><br>    2、 在 ireport 添加 oracle 的 jdbc 驱动<br><img src="https://i.imgur.com/qqPYAOd.png" alt=""><br><img src="https://i.imgur.com/uIXnf1h.png" alt=""><br>    3、 通过 ReportQuery 查询数据库<br><img src="https://i.imgur.com/vzo4vXn.png" alt=""><br><img src="https://i.imgur.com/TmPcw2t.png" alt=""><br>    4、 设计报表<br><img src="https://i.imgur.com/Qlhe23r.png" alt=""></p>
-<p>##4.4． JasperResport 根据模板文件 生成报表<br>    1、 设置 ireport 字段 自动换行<br><img src="https://i.imgur.com/HsGtGsM.png" alt=""></p>
+</code></pre><h2 id="4-3．-IReport-配置数据库连接，基于数据表生成报表"><a href="#4-3．-IReport-配置数据库连接，基于数据表生成报表" class="headerlink" title="4.3． IReport 配置数据库连接，基于数据表生成报表"></a>4.3． IReport 配置数据库连接，基于数据表生成报表</h2><pre><code>1、 点击按钮配置数据库连接
+新建 JDBC 连接
+</code></pre><p><img src="https://i.imgur.com/VvJwgM5.png" alt=""><br>    2、 在 ireport 添加 oracle 的 jdbc 驱动<br><img src="https://i.imgur.com/qqPYAOd.png" alt=""><br><img src="https://i.imgur.com/uIXnf1h.png" alt=""><br>    3、 通过 ReportQuery 查询数据库<br><img src="https://i.imgur.com/vzo4vXn.png" alt=""><br><img src="https://i.imgur.com/TmPcw2t.png" alt=""><br>    4、 设计报表<br><img src="https://i.imgur.com/Qlhe23r.png" alt=""></p>
+<h2 id="4-4．-JasperResport-根据模板文件-生成报表"><a href="#4-4．-JasperResport-根据模板文件-生成报表" class="headerlink" title="4.4． JasperResport 根据模板文件 生成报表"></a>4.4． JasperResport 根据模板文件 生成报表</h2><pre><code>1、 设置 ireport 字段 自动换行
+</code></pre><p><img src="https://i.imgur.com/HsGtGsM.png" alt=""></p>
 <pre><code>2、 将 waybill.jrxml 复制 bos_management
 3、 在 waybill_manage.html 页面添加按钮
 4、 在 common-parent 导入 jasperReport 开发包
@@ -744,7 +759,7 @@ private Cell buildCell(String content, Font font)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-导入maven坐标"><span class="nav-number">1.</span> <span class="nav-text">1.导入maven坐标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析-Excel-逻辑"><span class="nav-number">2.</span> <span class="nav-text">解析 Excel 逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-Excel-逻辑"><span class="nav-number">3.</span> <span class="nav-text">生成 Excel 逻辑</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-导入maven坐标"><span class="nav-number">1.</span> <span class="nav-text">1.导入maven坐标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析-Excel-逻辑"><span class="nav-number">2.</span> <span class="nav-text">解析 Excel 逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-Excel-逻辑"><span class="nav-number">3.</span> <span class="nav-text">生成 Excel 逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成pdf文件"><span class="nav-number">4.</span> <span class="nav-text">生成pdf文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用java原生代码生成pdf文件"><span class="nav-number">4.1.</span> <span class="nav-text">使用java原生代码生成pdf文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用jasperReport技术生成pdf文件"><span class="nav-number">4.2.</span> <span class="nav-text">使用jasperReport技术生成pdf文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附加ireport工具使用"><span class="nav-number">5.</span> <span class="nav-text">附加ireport工具使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IReport-报表模板简介和设置中文生成"><span class="nav-number">6.</span> <span class="nav-text">IReport 报表模板简介和设置中文生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、新建-JasperReport-模板文件-jrxml"><span class="nav-number">6.1.</span> <span class="nav-text">1、新建 JasperReport 模板文件 .jrxml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、设置默认语言"><span class="nav-number">6.2.</span> <span class="nav-text">2、设置默认语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、-了解报表模板结构"><span class="nav-number">6.3.</span> <span class="nav-text">3、 了解报表模板结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、-常用报表组件"><span class="nav-number">6.4.</span> <span class="nav-text">4、 常用报表组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3．-IReport-配置数据库连接，基于数据表生成报表"><span class="nav-number">7.</span> <span class="nav-text">4.3． IReport 配置数据库连接，基于数据表生成报表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4．-JasperResport-根据模板文件-生成报表"><span class="nav-number">8.</span> <span class="nav-text">4.4． JasperResport 根据模板文件 生成报表</span></a></li></ol></div>
             
 
           </div>
