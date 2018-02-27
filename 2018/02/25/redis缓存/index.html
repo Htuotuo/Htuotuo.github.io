@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="tuotuo的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1、Redis服务器搭建 2、向业务逻辑中添加缓存。 3、使用redis做缓存 4、缓存同步。 5、Solr服务器安装 1.首页面的展示流程首页是系统的门户，也就是系统的入口。所以首页的访问量是这个系统最大的。如果每次展示首页都从数据库中查询首页的内容信息，那么势必会对数据库造成很大的压力，所以需要使用缓存来减轻数据库压力。 实现缓存的工具有很多，现在比较流行的是redis。 2.Redis的安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis缓存">
+<meta property="og:url" content="http://htuotuo.top/2018/02/25/redis缓存/index.html">
+<meta property="og:site_name" content="tuotuo的博客">
+<meta property="og:description" content="1、Redis服务器搭建 2、向业务逻辑中添加缓存。 3、使用redis做缓存 4、缓存同步。 5、Solr服务器安装 1.首页面的展示流程首页是系统的门户，也就是系统的入口。所以首页的访问量是这个系统最大的。如果每次展示首页都从数据库中查询首页的内容信息，那么势必会对数据库造成很大的压力，所以需要使用缓存来减轻数据库压力。 实现缓存的工具有很多，现在比较流行的是redis。 2.Redis的安装">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/vUAokJA.png">
+<meta property="og:image" content="https://i.imgur.com/R9unXjI.png">
+<meta property="og:updated_time" content="2018-02-26T08:19:13.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis缓存">
+<meta name="twitter:description" content="1、Redis服务器搭建 2、向业务逻辑中添加缓存。 3、使用redis做缓存 4、缓存同步。 5、Solr服务器安装 1.首页面的展示流程首页是系统的门户，也就是系统的入口。所以首页的访问量是这个系统最大的。如果每次展示首页都从数据库中查询首页的内容信息，那么势必会对数据库造成很大的压力，所以需要使用缓存来减轻数据库压力。 实现缓存的工具有很多，现在比较流行的是redis。 2.Redis的安装">
+<meta name="twitter:image" content="https://i.imgur.com/vUAokJA.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://htuotuo.top/2018/02/25/redis缓存/"/>
+
+
+
+
+
+  <title>redis缓存 | tuotuo的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">tuotuo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">tuotuo</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://htuotuo.top/2018/02/25/redis缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tuotuo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tuotuo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis缓存</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:31:00+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <pre><code>1、Redis服务器搭建
+2、向业务逻辑中添加缓存。
+3、使用redis做缓存
+4、缓存同步。
+5、Solr服务器安装
+</code></pre><h2 id="1-首页面的展示流程"><a href="#1-首页面的展示流程" class="headerlink" title="1.首页面的展示流程"></a>1.首页面的展示流程</h2><pre><code>首页是系统的门户，也就是系统的入口。所以首页的访问量是这个系统最大的。如果每次展示首页都从数据库中查询首页的内容信息，那么势必会对数据库造成很大的压力，所以需要使用缓存来减轻数据库压力。
+实现缓存的工具有很多，现在比较流行的是redis。
+</code></pre><h2 id="2-Redis的安装"><a href="#2-Redis的安装" class="headerlink" title="2.Redis的安装"></a>2.Redis的安装</h2><h3 id="1-Redis的安装"><a href="#1-Redis的安装" class="headerlink" title="1.Redis的安装"></a>1.Redis的安装</h3><pre><code>Redis是c语言开发的。
+安装redis需要c语言的编译环境。如果没有gcc需要在线安装。Yum install gcc-c++
+
+安装步骤：
+第一步：redis的源码包上传到linux系统。
+第二步：解压缩redis。
+第三步：编译。make 
+第四步：安装。make install PREFIX=/usr/local/redis
+</code></pre><h3 id="2-连接redis"><a href="#2-连接redis" class="headerlink" title="2.连接redis"></a>2.连接redis</h3><h4 id="redis的启动："><a href="#redis的启动：" class="headerlink" title="redis的启动："></a>redis的启动：</h4><pre><code>前端启动：[root@localhost bin]# ./redis-server 
+后台启动：
+把/root/redis-3.0.0/redis.conf复制到/usr/local/redis/bin目录下
+[root@localhost redis-3.0.0]# cp redis.conf /usr/local/redis/bin/
+修改配置文件：
+
+[root@localhost bin]# ./redis-server redis.conf
+查看redis进程：
+[root@localhost bin]# ps aux|grep redis
+root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    
+root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis
+[root@localhost bin]# 
+</code></pre><h4 id="Redis-cli"><a href="#Redis-cli" class="headerlink" title="Redis-cli"></a>Redis-cli</h4><pre><code>[root@localhost bin]# ./redis-cli 
+默认连接localhost运行在6379端口的redis服务。
+[root@localhost bin]# ./redis-cli -h 192.168.25.153 -p 6379
+-h：连接的服务器的地址
+-p：服务的端口号
+</code></pre><h2 id="3-Redis五种数据类型"><a href="#3-Redis五种数据类型" class="headerlink" title="3.Redis五种数据类型"></a>3.Redis五种数据类型</h2><pre><code>String：key-value（做缓存）
+Redis中所有数据都是key-value形式存储的,它都是字符串，命令不区分大小写，value    区分大小写，redis是单线程的，redis不适合保存内容大的数据（以k为单位）
+     get,set,
+incr 加一 （生成id）
+decr 减一
+
+Hash：key-fields-values（做缓存）
+相当于一个key对应一个map，map中也有key-value
+用hash对key进行分类 
+存值:hset key-filed-values  ,取值:hget key-filed
+hincrbody
+List：有顺序可重复
+Set：无顺序，不能重复
+SortedSet（zset）：有顺序，不能重复
+</code></pre><h3 id="key命令"><a href="#key命令" class="headerlink" title="key命令"></a>key命令</h3><pre><code>设置key的过期时间
+Expire +key名字+ 时间（expire key second）
+Ttl key:查看key的有效期
+Persist key：清除key的过期时间。Key持久化
+</code></pre><h2 id="4-Redis的持久化"><a href="#4-Redis的持久化" class="headerlink" title="4.Redis的持久化"></a>4.Redis的持久化</h2><pre><code>Redis的所有数据都是保存在内存中
+Rdb （快照形式）：定期把内存中的数据保存在磁盘，内存中当前时刻（默认支持），丢失数据可能大
+aof形式：append only file。 把所有对数据库的操作（增删改操作的命令）保存到文件中。数据恢复时把所有的命令执行一遍即可
+</code></pre><h2 id="5-Redis集群的搭建"><a href="#5-Redis集群的搭建" class="headerlink" title="5.Redis集群的搭建"></a>5.Redis集群的搭建</h2><h3 id="redis-cluster架构图"><a href="#redis-cluster架构图" class="headerlink" title="redis-cluster架构图"></a>redis-cluster架构图</h3><p><img src="https://i.imgur.com/vUAokJA.png" alt=""></p>
+<pre><code>架构细节:
+(1)所有的redis节点彼此互联(PING-PONG机制),内部使用二进制协议优化传输速度和带宽.
+(2)节点的fail是通过集群中超过半数的节点检测失效时才生效.
+(3)客户端与redis节点直连,不需要中间proxy层.客户端不需要连接集群所有节点,连接集群中任何一个可用节点即可
+(4)redis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护node&lt;-&gt;slot&lt;-&gt;value
+Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使用 crc16 算法算出一个结果，然后把结果对 16384 求余数，这样每个 key 都会对应一个编号在 0-16383 之间的哈希槽，redis 会根据节点数量大致均等的将哈希槽映射到不同的节点
+</code></pre><h3 id="Redis集群的搭建"><a href="#Redis集群的搭建" class="headerlink" title="Redis集群的搭建"></a>Redis集群的搭建</h3><pre><code>Redis集群中至少有3个节点，要保证集群的高可用，需要每个节点有一个备份机，redis集群至少要6台服务机
+</code></pre><h4 id="集群搭建环境"><a href="#集群搭建环境" class="headerlink" title="集群搭建环境"></a>集群搭建环境</h4><pre><code>1、使用ruby脚本搭建集群。需要ruby的运行环境。
+安装ruby
+yum install ruby
+yum install rubygems
+
+2、安装ruby脚本运行使用的包。
+[root@localhost ~]# gem install redis-3.0.0.gem 
+Successfully installed redis-3.0.0
+1 gem installed
+Installing ri documentation for redis-3.0.0...
+Installing RDoc documentation for redis-3.0.0...
+[root@localhost ~]# 
+
+[root@localhost ~]# cd redis-3.0.0/src
+[root@localhost src]# ll *.rb
+-rwxrwxr-x. 1 root root 48141 Apr  1  2015 redis-trib.rb
+
+5.2.2.搭建步骤
+需要6台redis服务器。搭建伪分布式。
+需要6个redis实例。
+需要运行在不同的端口7001-7006
+
+第一步：创建6个redis实例，每个实例运行在不同的端口。需要修改redis.conf配置文件。配置文件中还需要把cluster-enabled yes前的注释去掉。
+</code></pre><p><img src="https://i.imgur.com/R9unXjI.png" alt="">        </p>
+<pre><code>第二步：启动每个redis实例。
+第三步：使用ruby脚本搭建集群。
+将*.rb 文件复制到redis-cluster 集群文件中
+./redis-trib.rb create --replicas 1 192.168.25.132:7001 192.168.25.132:7002 192.168.25.132:7003 192.168.25.132:7004 192.168.25.132:7005  192.168.25.132:7006
+如果是安装在同一个服务其中使用
+./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005  127.0.0.1:7006
+
+创建关闭集群的脚本：
+[root@localhost redis-cluster]# vim shutdow-all.sh
+redis01/redis-cli -p 7001 shutdown
+redis01/redis-cli -p 7002 shutdown
+redis01/redis-cli -p 7003 shutdown
+redis01/redis-cli -p 7004 shutdown
+redis01/redis-cli -p 7005 shutdown
+redis01/redis-cli -p 7006 shutdown
+[root@localhost redis-cluster]# chmod u+x shutdow-all.sh 
+
+[root@localhost redis-cluster]# ./redis-trib.rb create --replicas 1 192.168.25.153:7001 192.168.25.153:7002 192.168.25.153:7003 192.168.25.153:7004 192.168.25.153:7005  192.168.25.153:7006
+&gt;&gt;&gt; Creating cluster
+Connecting to node 192.168.25.153:7001: OK
+Connecting to node 192.168.25.153:7002: OK
+Connecting to node 192.168.25.153:7003: OK
+Connecting to node 192.168.25.153:7004: OK
+Connecting to node 192.168.25.153:7005: OK
+Connecting to node 192.168.25.153:7006: OK
+&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...
+Using 3 masters:
+192.168.25.153:7001
+192.168.25.153:7002
+192.168.25.153:7003
+Adding replica 192.168.25.153:7004 to 192.168.25.153:7001
+Adding replica 192.168.25.153:7005 to 192.168.25.153:7002
+Adding replica 192.168.25.153:7006 to 192.168.25.153:7003
+M: 2e48ae301e9c32b04a7d4d92e15e98e78de8c1f3 192.168.25.153:7001
+   slots:0-5460 (5461 slots) master
+M: 8cd93a9a943b4ef851af6a03edd699a6061ace01 192.168.25.153:7002
+   slots:5461-10922 (5462 slots) master
+M: 2935007902d83f20b1253d7f43dae32aab9744e6 192.168.25.153:7003
+   slots:10923-16383 (5461 slots) master
+S: 74f9d9706f848471583929fc8bbde3c8e99e211b 192.168.25.153:7004
+   replicates 2e48ae301e9c32b04a7d4d92e15e98e78de8c1f3
+S: 42cc9e25ebb19dda92591364c1df4b3a518b795b 192.168.25.153:7005
+   replicates 8cd93a9a943b4ef851af6a03edd699a6061ace01
+S: 8b1b11d509d29659c2831e7a9f6469c060dfcd39 192.168.25.153:7006
+   replicates 2935007902d83f20b1253d7f43dae32aab9744e6
+Can I set the above configuration? (type &apos;yes&apos; to accept): yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join.....
+&gt;&gt;&gt; Performing Cluster Check (using node 192.168.25.153:7001)
+M: 2e48ae301e9c32b04a7d4d92e15e98e78de8c1f3 192.168.25.153:7001
+   slots:0-5460 (5461 slots) master
+M: 8cd93a9a943b4ef851af6a03edd699a6061ace01 192.168.25.153:7002
+   slots:5461-10922 (5462 slots) master
+M: 2935007902d83f20b1253d7f43dae32aab9744e6 192.168.25.153:7003
+   slots:10923-16383 (5461 slots) master
+M: 74f9d9706f848471583929fc8bbde3c8e99e211b 192.168.25.153:7004
+   slots: (0 slots) master
+   replicates 2e48ae301e9c32b04a7d4d92e15e98e78de8c1f3
+M: 42cc9e25ebb19dda92591364c1df4b3a518b795b 192.168.25.153:7005
+   slots: (0 slots) master
+   replicates 8cd93a9a943b4ef851af6a03edd699a6061ace01
+M: 8b1b11d509d29659c2831e7a9f6469c060dfcd39 192.168.25.153:7006
+   slots: (0 slots) master
+   replicates 2935007902d83f20b1253d7f43dae32aab9744e6
+[OK] All nodes agree about slots configuration.
+&gt;&gt;&gt; Check for open slots...
+&gt;&gt;&gt; Check slots coverage...
+[OK] All 16384 slots covered.
+[root@localhost redis-cluster]# 
+</code></pre><h4 id="集群的使用方法"><a href="#集群的使用方法" class="headerlink" title="集群的使用方法"></a>集群的使用方法</h4><pre><code>Redis-cli连接集群。
+[root@localhost redis-cluster]# redis01/redis-cli -p 7002 -c
+-c：代表连接的是redis集群
+</code></pre><h2 id="6-Jedis"><a href="#6-Jedis" class="headerlink" title="6.Jedis"></a>6.Jedis</h2><pre><code>需要把jedis依赖的jar包添加到工程中。Maven工程中需要把jedis的坐标添加到依赖。
+
+推荐添加到服务层。Taotao-content-Service工程中。
+</code></pre><h3 id="6-1-连接单机版"><a href="#6-1-连接单机版" class="headerlink" title="6.1.连接单机版"></a>6.1.连接单机版</h3><pre><code>第一步：创建一个Jedis对象。需要指定服务端的ip及端口。
+第二步：使用Jedis对象操作数据库，每个redis命令对应一个方法。
+第三步：打印结果。
+第四步：关闭Jedis
+@Test
+    public void testJedis() throws Exception {
+        // 第一步：创建一个Jedis对象。需要指定服务端的ip及端口。
+        Jedis jedis = new Jedis(&quot;192.168.25.153&quot;, 6379);
+        // 第二步：使用Jedis对象操作数据库，每个redis命令对应一个方法。
+        String result = jedis.get(&quot;hello&quot;);
+        // 第三步：打印结果。
+        System.out.println(result);
+        // 第四步：关闭Jedis
+        jedis.close();
+    }
+</code></pre><h3 id="6-2-连接单机版使用连接池"><a href="#6-2-连接单机版使用连接池" class="headerlink" title="6.2.连接单机版使用连接池"></a>6.2.连接单机版使用连接池</h3><pre><code>第一步：创建一个JedisPool对象。需要指定服务端的ip及端口。
+第二步：从JedisPool中获得Jedis对象。
+第三步：使用Jedis操作redis服务器。
+第四步：操作完毕后关闭jedis对象，连接池回收资源。
+第五步：关闭JedisPool对象。
+@Test
+    public void testJedisPool() throws Exception {
+        // 第一步：创建一个JedisPool对象。需要指定服务端的ip及端口。
+        JedisPool jedisPool = new JedisPool(&quot;192.168.25.153&quot;, 6379);
+        // 第二步：从JedisPool中获得Jedis对象。
+        Jedis jedis = jedisPool.getResource();
+        // 第三步：使用Jedis操作redis服务器。
+        jedis.set(&quot;jedis&quot;, &quot;test&quot;);
+        String result = jedis.get(&quot;jedis&quot;);
+        System.out.println(result);
+        // 第四步：操作完毕后关闭jedis对象，连接池回收资源。
+        jedis.close();
+        // 第五步：关闭JedisPool对象。
+        jedisPool.close();
+    }
+</code></pre><h3 id="6-3-连接集群版"><a href="#6-3-连接集群版" class="headerlink" title="6.3.连接集群版"></a>6.3.连接集群版</h3><pre><code>第一步：使用JedisCluster对象。需要一个Set&lt;HostAndPort&gt;参数。Redis节点的列表。
+第二步：直接使用JedisCluster对象操作redis。在系统中单例存在。
+第三步：打印结果
+第四步：系统关闭前，关闭JedisCluster对象。
+
+@Test
+    public void testJedisCluster() throws Exception {
+        // 第一步：使用JedisCluster对象。需要一个Set&lt;HostAndPort&gt;参数。Redis节点的列表。
+        Set&lt;HostAndPort&gt; nodes = new HashSet&lt;&gt;();
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7001));
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7002));
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7003));
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7004));
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7005));
+        nodes.add(new HostAndPort(&quot;192.168.25.153&quot;, 7006));
+        JedisCluster jedisCluster = new JedisCluster(nodes);
+        // 第二步：直接使用JedisCluster对象操作redis。在系统中单例存在。
+        jedisCluster.set(&quot;hello&quot;, &quot;100&quot;);
+        String result = jedisCluster.get(&quot;hello&quot;);
+        // 第三步：打印结果
+        System.out.println(result);
+        // 第四步：系统关闭前，关闭JedisCluster对象。
+        jedisCluster.close();
+    }
+</code></pre><h2 id="7-向业务逻辑中添加缓存"><a href="#7-向业务逻辑中添加缓存" class="headerlink" title="7.向业务逻辑中添加缓存"></a>7.向业务逻辑中添加缓存</h2><h3 id="接口封装"><a href="#接口封装" class="headerlink" title="接口封装"></a>接口封装</h3><pre><code>常用的操作redis的方法提取出一个接口，分别对应单机版和集群版创建两个实现类。
+</code></pre><h4 id="接口定义"><a href="#接口定义" class="headerlink" title="接口定义"></a>接口定义</h4><pre><code>public interface JedisClient {
+
+    String set(String key, String value);
+    String get(String key);
+    Boolean exists(String key);
+    Long expire(String key, int seconds);
+    Long ttl(String key);
+    Long incr(String key);
+    Long hset(String key, String field, String value);
+    String hget(String key, String field);
+    Long hdel(String key, String... field);
+}
+</code></pre><h4 id="单机版实现类"><a href="#单机版实现类" class="headerlink" title="单机版实现类"></a>单机版实现类</h4><pre><code>public class JedisClientPool implements JedisClient {
+
+    @Autowired
+    private JedisPool jedisPool;
+
+    @Override
+    public String set(String key, String value) {
+        Jedis jedis = jedisPool.getResource();
+        String result = jedis.set(key, value);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public String get(String key) {
+        Jedis jedis = jedisPool.getResource();
+        String result = jedis.get(key);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Boolean exists(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Boolean result = jedis.exists(key);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Long expire(String key, int seconds) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.expire(key, seconds);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Long ttl(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.ttl(key);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Long incr(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.incr(key);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Long hset(String key, String field, String value) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.hset(key, field, value);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public String hget(String key, String field) {
+        Jedis jedis = jedisPool.getResource();
+        String result = jedis.hget(key, field);
+        jedis.close();
+        return result;
+    }
+
+    @Override
+    public Long hdel(String key, String... field) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.hdel(key, field);
+        jedis.close();
+        return result;
+    }
+
+}
+
+配置：applicationContext-redis.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context4.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx4.2.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util4.2.xsd&quot;&gt;
+
+    &lt;!-- 配置单机版的连接 --&gt;
+    &lt;bean id=&quot;jedisPool&quot; class=&quot;redis.clients.jedis.JedisPool&quot;&gt;
+        &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+        &lt;constructor-arg name=&quot;port&quot; value=&quot;6379&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;jedisClientPool&quot; class=&quot;com.taotao.jedis.JedisClientPool&quot;/&gt;
+
+&lt;/beans&gt;
+</code></pre><h4 id="集群版实现类"><a href="#集群版实现类" class="headerlink" title="集群版实现类"></a>集群版实现类</h4><pre><code>package com.xxx.jedis;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import redis.clients.jedis.JedisCluster;
+
+public class JedisClientCluster implements JedisClient {
+
+    @Autowired
+    private JedisCluster jedisCluster;
+
+    @Override
+    public String set(String key, String value) {
+        return jedisCluster.set(key, value);
+    }
+
+    @Override
+    public String get(String key) {
+        return jedisCluster.get(key);
+    }
+
+    @Override
+    public Boolean exists(String key) {
+        return jedisCluster.exists(key);
+    }
+
+    @Override
+    public Long expire(String key, int seconds) {
+        return jedisCluster.expire(key, seconds);
+    }
+
+    @Override
+    public Long ttl(String key) {
+        return jedisCluster.ttl(key);
+    }
+
+    @Override
+    public Long incr(String key) {
+        return jedisCluster.incr(key);
+    }
+
+    @Override
+    public Long hset(String key, String field, String value) {
+        return jedisCluster.hset(key, field, value);
+    }
+
+    @Override
+    public String hget(String key, String field) {
+        return jedisCluster.hget(key, field);
+    }
+
+    @Override
+    public Long hdel(String key, String... field) {
+        return jedisCluster.hdel(key, field);
+    }
+
+}
+
+
+Spring的配置：
+&lt;!-- 集群版的配置 --&gt;
+    &lt;bean id=&quot;jedisCluster&quot; class=&quot;redis.clients.jedis.JedisCluster&quot;&gt;
+        &lt;constructor-arg&gt;
+            &lt;set&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7001&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7002&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7003&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7004&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7005&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+                &lt;bean class=&quot;redis.clients.jedis.HostAndPort&quot;&gt;
+                    &lt;constructor-arg name=&quot;host&quot; value=&quot;192.168.25.153&quot;&gt;&lt;/constructor-arg&gt;
+                    &lt;constructor-arg name=&quot;port&quot; value=&quot;7006&quot;&gt;&lt;/constructor-arg&gt;
+                &lt;/bean&gt;
+            &lt;/set&gt;
+        &lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;jedisClientCluster&quot; class=&quot;com.taotao.jedis.JedisClientCluster&quot;/&gt;
+
+注意：单机版和集群版不能共存，使用单机版时注释集群版的配置。使用集群版，把单机版注释。
+</code></pre><h3 id="封装代码测试"><a href="#封装代码测试" class="headerlink" title="封装代码测试"></a>封装代码测试</h3><pre><code>@Test
+    public void testJedisClient() throws Exception {
+        //初始化Spring容器
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;classpath:spring/applicationContext-*.xml&quot;);
+        //从容器中获得JedisClient对象
+        JedisClient jedisClient = applicationContext.getBean(JedisClient.class);
+        jedisClient.set(&quot;first&quot;, &quot;100&quot;);
+        String result = jedisClient.get(&quot;first&quot;);
+        System.out.println(result);
+
+
+    }
+</code></pre><h3 id="添加缓存"><a href="#添加缓存" class="headerlink" title="添加缓存"></a>添加缓存</h3><h4 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h4><pre><code>查询内容列表时添加缓存。
+1、查询数据库之前先查询缓存。
+2、查询到结果，直接响应结果。
+3、查询不到，缓存中没有需要查询数据库。
+4、把查询结果添加到缓存中。
+5、返回结果。
+
+向redis中添加缓存：
+Key：cid
+Value：内容列表。需要把java对象转换成json。
+
+使用hash对key进行归类。
+HASH_KEY:HASH
+            |--KEY:VALUE
+            |--KEY:VALUE
+            |--KEY:VALUE
+            |--KEY:VALUE
+
+
+注意：添加缓存不能影响正常业务逻辑。
+</code></pre><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><pre><code>@Override
+    public List&lt;TbContent&gt; getContentList(long cid) {
+        //查询缓存
+        try {
+            String json = jedisClient.hget(CONTENT_KEY, cid + &quot;&quot;);
+            //判断json是否为空
+            if (StringUtils.isNotBlank(json)) {
+                //把json转换成list
+                List&lt;TbContent&gt; list = JsonUtils.jsonToList(json, TbContent.class);
+                return list;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //根据cid查询内容列表
+        TbContentExample example = new TbContentExample();
+        //设置查询条件
+        Criteria criteria = example.createCriteria();
+        criteria.andCategoryIdEqualTo(cid);
+        //执行查询
+        List&lt;TbContent&gt; list = contentMapper.selectByExample(example);
+        //向缓存中添加数据
+        try {
+            jedisClient.hset(CONTENT_KEY, cid + &quot;&quot;, JsonUtils.objectToJson(list));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+</code></pre><h3 id="缓存同步"><a href="#缓存同步" class="headerlink" title="缓存同步"></a>缓存同步</h3><pre><code>对内容信息做增删改操作后只需要把对应缓存删除即可。
+可以根据cid删除。
+@Override
+    public TaotaoResult addContent(TbContent content) {
+        //补全属性
+        content.setCreated(new Date());
+        content.setUpdated(new Date());
+        //插入数据
+        contentMapper.insert(content);
+        //缓存同步
+        jedisClient.hdel(CONTENT_KEY, content.getCategoryId().toString());
+
+        return TaotaoResult.ok();
+    }
+</code></pre><h2 id="8-搜索工程搭建"><a href="#8-搜索工程搭建" class="headerlink" title="8.搜索工程搭建"></a>8.搜索工程搭建</h2><pre><code>要实现搜索功能，需要搭建solr服务、搜索服务工程、搜索系统
+</code></pre><h3 id="Solr服务搭建"><a href="#Solr服务搭建" class="headerlink" title="Solr服务搭建"></a>Solr服务搭建</h3><h4 id="Solr的环境"><a href="#Solr的环境" class="headerlink" title="Solr的环境"></a>Solr的环境</h4><pre><code>Solr是java开发。
+需要安装jdk。
+安装环境Linux。
+需要安装Tomcat。
+</code></pre><h4 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h4><pre><code>第一步：把solr 的压缩包上传到Linux系统
+第二步：解压solr。
+第三步：安装Tomcat，解压缩即可。
+第四步：把solr部署到Tomcat下。
+第五步：解压缩war包。启动Tomcat解压。
+第六步：把/root/solr-4.10.3/example/lib/ext目录下的所有的jar包，添加到solr工程中。
+[root@localhost ext]# pwd
+/root/solr-4.10.3/example/lib/ext
+[root@localhost ext]# cp * /usr/local/solr/tomcat/webapps/solr/WEB-INF/lib/
+第七步：创建一个solrhome。/example/solr目录就是一个solrhome。复制此目录到/usr/local/solr/solrhome
+[root@localhost example]# pwd
+/root/solr-4.10.3/example
+[root@localhost example]# cp -r solr /usr/local/solr/solrhome
+[root@localhost example]# 
+第八步：关联solr及solrhome。需要修改solr工程的web.xml文件。
+
+第九步：启动Tomcat
+http://192.168.25.154:8080/solr/
+和windows下的配置完全一样。
+</code></pre><h4 id="Solr的使用"><a href="#Solr的使用" class="headerlink" title="Solr的使用"></a>Solr的使用</h4><pre><code>添加文档必须有id域，其他域 必须在solr的schema.xml中定义。
+</code></pre><h3 id="配置业务域"><a href="#配置业务域" class="headerlink" title="配置业务域"></a>配置业务域</h3><pre><code>schema.xml中定义，这里定义的是自己需要进行索引的字段
+1、商品Id
+2、商品标题
+3、商品卖点
+4、商品价格
+5、商品图片
+6、分类名称
+7、商品描述
+
+创建对应的业务域。需要制定中文分析器。
+
+创建步骤：
+第一步：把中文分析器添加到工程中。
+1、把IKAnalyzer2012FF_u1.jar添加到solr工程的lib目录下
+2、把扩展词典、配置文件放到solr工程的WEB-INF/classes目录下。
+第二步：配置一个FieldType，制定使用IKAnalyzer
+修改schema.xml文件
+修改Solr的schema.xml文件，添加FieldType：
+&lt;fieldType name=&quot;text_ik&quot; class=&quot;solr.TextField&quot;&gt;
+  &lt;analyzer class=&quot;org.wltea.analyzer.lucene.IKAnalyzer&quot;/&gt;
+&lt;/fieldType&gt;
+
+第三步：配置业务域，type制定使用自定义的FieldType。
+设置业务系统Field
+&lt;field name=&quot;item_title&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_sell_point&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_price&quot;  type=&quot;long&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_image&quot; type=&quot;string&quot; indexed=&quot;false&quot; stored=&quot;true&quot; /&gt;
+&lt;field name=&quot;item_category_name&quot; type=&quot;string&quot; indexed=&quot;true&quot; stored=&quot;true&quot; /&gt;
+&lt;field name=&quot;item_desc&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;false&quot; /&gt;
+
+&lt;field name=&quot;item_keywords&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;false&quot; multiValued=&quot;true&quot;/&gt;
+&lt;copyField source=&quot;item_title&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_sell_point&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_category_name&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_desc&quot; dest=&quot;item_keywords&quot;/&gt;
+
+第四步：重启tomcat
+</code></pre><h3 id="搜索服务工程搭建"><a href="#搜索服务工程搭建" class="headerlink" title="搜索服务工程搭建"></a>搜索服务工程搭建</h3><pre><code>可以参考taotao-manager创建。
+项目名-search（聚合工程pom）
+|--项目名-search-interface（jar）
+|--项目名-search-Service（war）
+</code></pre><h3 id="附加"><a href="#附加" class="headerlink" title="附加"></a>附加</h3><pre><code>怎么将二维表的转为redis的String 类型数据
+使用：的格式进行转换：表名：主键id：字段名：字段内容    
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/24/webservice的Restful风格/" rel="next" title="webservice的Restful风格">
+                <i class="fa fa-chevron-left"></i> webservice的Restful风格
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/ActiveMQ队列/" rel="prev" title="ActiveMQ队列">
+                ActiveMQ队列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tuotuo</p>
+              <p class="site-description motion-element" itemprop="description">自己的鞋子，自己知道紧在哪里。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-首页面的展示流程"><span class="nav-number">1.</span> <span class="nav-text">1.首页面的展示流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Redis的安装"><span class="nav-number">2.</span> <span class="nav-text">2.Redis的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Redis的安装"><span class="nav-number">2.1.</span> <span class="nav-text">1.Redis的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-连接redis"><span class="nav-number">2.2.</span> <span class="nav-text">2.连接redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis的启动："><span class="nav-number">2.2.1.</span> <span class="nav-text">redis的启动：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-cli"><span class="nav-number">2.2.2.</span> <span class="nav-text">Redis-cli</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Redis五种数据类型"><span class="nav-number">3.</span> <span class="nav-text">3.Redis五种数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#key命令"><span class="nav-number">3.1.</span> <span class="nav-text">key命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Redis的持久化"><span class="nav-number">4.</span> <span class="nav-text">4.Redis的持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Redis集群的搭建"><span class="nav-number">5.</span> <span class="nav-text">5.Redis集群的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-cluster架构图"><span class="nav-number">5.1.</span> <span class="nav-text">redis-cluster架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis集群的搭建"><span class="nav-number">5.2.</span> <span class="nav-text">Redis集群的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集群搭建环境"><span class="nav-number">5.2.1.</span> <span class="nav-text">集群搭建环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群的使用方法"><span class="nav-number">5.2.2.</span> <span class="nav-text">集群的使用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Jedis"><span class="nav-number">6.</span> <span class="nav-text">6.Jedis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-连接单机版"><span class="nav-number">6.1.</span> <span class="nav-text">6.1.连接单机版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-连接单机版使用连接池"><span class="nav-number">6.2.</span> <span class="nav-text">6.2.连接单机版使用连接池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-连接集群版"><span class="nav-number">6.3.</span> <span class="nav-text">6.3.连接集群版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-向业务逻辑中添加缓存"><span class="nav-number">7.</span> <span class="nav-text">7.向业务逻辑中添加缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口封装"><span class="nav-number">7.1.</span> <span class="nav-text">接口封装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口定义"><span class="nav-number">7.1.1.</span> <span class="nav-text">接口定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单机版实现类"><span class="nav-number">7.1.2.</span> <span class="nav-text">单机版实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群版实现类"><span class="nav-number">7.1.3.</span> <span class="nav-text">集群版实现类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装代码测试"><span class="nav-number">7.2.</span> <span class="nav-text">封装代码测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加缓存"><span class="nav-number">7.3.</span> <span class="nav-text">添加缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#功能分析"><span class="nav-number">7.3.1.</span> <span class="nav-text">功能分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">7.3.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存同步"><span class="nav-number">7.4.</span> <span class="nav-text">缓存同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-搜索工程搭建"><span class="nav-number">8.</span> <span class="nav-text">8.搜索工程搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solr服务搭建"><span class="nav-number">8.1.</span> <span class="nav-text">Solr服务搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Solr的环境"><span class="nav-number">8.1.1.</span> <span class="nav-text">Solr的环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搭建步骤"><span class="nav-number">8.1.2.</span> <span class="nav-text">搭建步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solr的使用"><span class="nav-number">8.1.3.</span> <span class="nav-text">Solr的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置业务域"><span class="nav-number">8.2.</span> <span class="nav-text">配置业务域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索服务工程搭建"><span class="nav-number">8.3.</span> <span class="nav-text">搜索服务工程搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加"><span class="nav-number">8.4.</span> <span class="nav-text">附加</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tuotuo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+  </div>
+  
+	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

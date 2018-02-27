@@ -81,17 +81,29 @@
 
 
 
-<meta name="description" content="1.Redis hash 常用命令1、HDEL key field1 [field2] 删除一个或多个哈希表字段`  2、HEXISTS key field    查看哈希表 key 中，指定的字段是否存在。  3、HGET key field    获取存储在哈希表中指定字段的值。`  4、HGETALL key    获取在哈希表中指定 key 的所有字段和值  5、HKEYS key">
+<meta name="description" content="ActiveMQ 的作用分析ActiveMQ对列与webservice之间的区别：     相同：都可以用于不同系统之间的通讯     不同：ActiveMQ是异步，webservice是同步的          ActiveMQ有生产者和消费者，生产者生产，而消费者只负责监听消费，无需在发送响应之后等待，而webservice则需在发送响应后等待响应结果。 ActiveMQ 工作原理 1、 解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis命令">
-<meta property="og:url" content="http://htuotuo.top/2018/02/24/redis命令/index.html">
+<meta property="og:title" content="ActiveMQ队列">
+<meta property="og:url" content="http://htuotuo.top/2018/02/25/ActiveMQ队列/index.html">
 <meta property="og:site_name" content="tuotuo的博客">
-<meta property="og:description" content="1.Redis hash 常用命令1、HDEL key field1 [field2] 删除一个或多个哈希表字段`  2、HEXISTS key field    查看哈希表 key 中，指定的字段是否存在。  3、HGET key field    获取存储在哈希表中指定字段的值。`  4、HGETALL key    获取在哈希表中指定 key 的所有字段和值  5、HKEYS key">
+<meta property="og:description" content="ActiveMQ 的作用分析ActiveMQ对列与webservice之间的区别：     相同：都可以用于不同系统之间的通讯     不同：ActiveMQ是异步，webservice是同步的          ActiveMQ有生产者和消费者，生产者生产，而消费者只负责监听消费，无需在发送响应之后等待，而webservice则需在发送响应后等待响应结果。 ActiveMQ 工作原理 1、 解决">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-24T12:32:13.085Z">
+<meta property="og:image" content="https://i.imgur.com/yPDblmh.png">
+<meta property="og:image" content="https://i.imgur.com/FVbY7sW.png">
+<meta property="og:image" content="https://i.imgur.com/HJQg3sc.png">
+<meta property="og:image" content="https://i.imgur.com/m0Kx8da.png">
+<meta property="og:image" content="https://i.imgur.com/u7Jm2vX.png">
+<meta property="og:image" content="https://i.imgur.com/xExYQqE.png">
+<meta property="og:image" content="https://i.imgur.com/5sCfpE0.png">
+<meta property="og:image" content="https://i.imgur.com/8M0tPru.png">
+<meta property="og:image" content="https://i.imgur.com/O0G8hz9.png">
+<meta property="og:image" content="https://i.imgur.com/BJ6LfY5.png">
+<meta property="og:image" content="https://i.imgur.com/BYc5Uql.png">
+<meta property="og:updated_time" content="2018-02-26T03:32:37.905Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis命令">
-<meta name="twitter:description" content="1.Redis hash 常用命令1、HDEL key field1 [field2] 删除一个或多个哈希表字段`  2、HEXISTS key field    查看哈希表 key 中，指定的字段是否存在。  3、HGET key field    获取存储在哈希表中指定字段的值。`  4、HGETALL key    获取在哈希表中指定 key 的所有字段和值  5、HKEYS key">
+<meta name="twitter:title" content="ActiveMQ队列">
+<meta name="twitter:description" content="ActiveMQ 的作用分析ActiveMQ对列与webservice之间的区别：     相同：都可以用于不同系统之间的通讯     不同：ActiveMQ是异步，webservice是同步的          ActiveMQ有生产者和消费者，生产者生产，而消费者只负责监听消费，无需在发送响应之后等待，而webservice则需在发送响应后等待响应结果。 ActiveMQ 工作原理 1、 解决">
+<meta name="twitter:image" content="https://i.imgur.com/yPDblmh.png">
 
 
 
@@ -121,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://htuotuo.top/2018/02/24/redis命令/"/>
+  <link rel="canonical" href="http://htuotuo.top/2018/02/25/ActiveMQ队列/"/>
 
 
 
 
 
-  <title>redis命令 | tuotuo的博客</title>
+  <title>ActiveMQ队列 | tuotuo的博客</title>
   
 
 
@@ -268,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://htuotuo.top/2018/02/24/redis命令/">
+    <link itemprop="mainEntityOfPage" href="http://htuotuo.top/2018/02/25/ActiveMQ队列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tuotuo">
@@ -285,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">redis命令</h1>
+          <h1 class="post-title" itemprop="name headline">ActiveMQ队列</h1>
         
 
         <div class="post-meta">
@@ -297,8 +309,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-24T20:08:51+08:00">
-                2018-02-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:31:30+08:00">
+                2018-02-25
               </time>
             
 
@@ -335,72 +347,83 @@
       
 
       
-        <h2 id="1-Redis-hash-常用命令"><a href="#1-Redis-hash-常用命令" class="headerlink" title="1.Redis hash 常用命令"></a>1.Redis hash 常用命令</h2><pre><code>1、HDEL key field1 [field2] 删除一个或多个哈希表字段`
+        <h2 id="ActiveMQ-的作用分析"><a href="#ActiveMQ-的作用分析" class="headerlink" title="ActiveMQ 的作用分析"></a>ActiveMQ 的作用分析</h2><pre><code>ActiveMQ对列与webservice之间的区别：
+    相同：都可以用于不同系统之间的通讯
+    不同：ActiveMQ是异步，webservice是同步的
+         ActiveMQ有生产者和消费者，生产者生产，而消费者只负责监听消费，无需在发送响应之后等待，而webservice则需在发送响应后等待响应结果。
+</code></pre><h3 id="ActiveMQ-工作原理"><a href="#ActiveMQ-工作原理" class="headerlink" title="ActiveMQ 工作原理"></a>ActiveMQ 工作原理</h3><p><img src="https://i.imgur.com/yPDblmh.png" alt=""></p>
+<pre><code>1、 解决服务之间耦合
+2、 使用消息队列，增加系统并发处理量
 
-2、HEXISTS key field    查看哈希表 key 中，指定的字段是否存在。
+ActiveMQ 应用场景分析
+1、 用户注册，重点用户信息数据库保存，发短信、发邮件，增加业务处理复杂度，这
+时候使用 MQ， 将发短信、发邮箱，通知 MQ，由另外服务平台完成
 
-3、HGET key field    获取存储在哈希表中指定字段的值。`
+2、 搜索平台、缓存平台
+查询数据，建立缓存、索引 ，不从数据库查询，从缓存或者索引库查询
+当增加、修改、删除数据时，发送消息给 MQ， 缓存平台、索引平台 从 MQ 获取
+到这个信息，更新缓存或者索引 
+</code></pre><h2 id="ActiveMQ-安装和使用"><a href="#ActiveMQ-安装和使用" class="headerlink" title="ActiveMQ 安装和使用"></a>ActiveMQ 安装和使用</h2><p><a href="http://activemq.apache.org/" target="_blank" rel="noopener">    官网： http://activemq.apache.org/</a></p>
+<pre><code>进行 apache-activemq-5.14.0\bin\win64 目录 启动 activemq.bat 文件
+访问： http://localhost:8161/ 用户名和密码 都是 admin
 
-4、HGETALL key    获取在哈希表中指定 key 的所有字段和值
+activeMQ 使用的是标准生产者和消费者模型
+有两种数据结构 Queue、 Topic
+1、 Queue 队列 ，生产者生产了一个消息，只能由一个消费者进行消费
+2、 Topic 话题，生产者生产了一个消息，可以由多个消费者进行消费
+</code></pre><h2 id="使用-Java-程序操作-ActiveMQ（了解）"><a href="#使用-Java-程序操作-ActiveMQ（了解）" class="headerlink" title="使用 Java 程序操作 ActiveMQ（了解）"></a>使用 Java 程序操作 ActiveMQ（了解）</h2><pre><code>1、 开发 activeMQ 只需要导入 activemq-all-5.14.0.jar
+使用 maven 坐标
 
-5、HKEYS key    获取所有哈希表中的字段
+2、 编写 MQ 消息生产者
+使用步骤：
+第一步：创建ConnectionFactory对象，需要指定服务端ip及端口号。
+第二步：使用ConnectionFactory对象创建一个Connection对象。
+第三步：开启连接，调用Connection对象的start方法。
+第四步：使用Connection对象创建一个Session对象。
+第五步：使用Session对象创建一个Destination对象（topic、queue），此处创建一个Topic对象。
+第六步：使用Session对象创建一个Producer对象。
+第七步：创建一个Message对象，创建一个TextMessage对象。
+第八步：使用Producer对象发送消息。
+第九步：关闭资源。
+</code></pre><p><img src="https://i.imgur.com/FVbY7sW.png" alt=""></p>
+<pre><code>默认 tcp 连接 activeMQ 端口 61616 ！！！
 
-6、HINCRBY key field increment 为哈希表 key 中的指定字段的整数值加上增量 increment 。
+3、 编写 MQ 消费者代码
+消费者：接收消息。
+第一步：创建一个ConnectionFactory对象。
+第二步：从ConnectionFactory对象中获得一个Connection对象。
+第三步：开启连接。调用Connection对象的start方法。
+第四步：使用Connection对象创建一个Session对象。
+第五步：使用Session对象创建一个Destination对象。和发送端保持一致topic，并且话题的名称一致。
+第六步：使用Session对象创建一个Consumer对象。
+第七步：接收消息。
+第八步：打印消息。
+第九步：关闭资源
+a) 使用 MessageConsumer 完成消费
+</code></pre><p><img src="https://i.imgur.com/HJQg3sc.png" alt=""></p>
+<pre><code>b) 使用监听器，监听消息的内容，进行消费
+</code></pre><p><img src="https://i.imgur.com/m0Kx8da.png" alt=""></p>
+<p><strong>注意：在linux服务器中配置activeMQ访问页面如果出现503问题</strong></p>
+<pre><code>解决方法：在linux中查看自己的主机名是否为localhost，如果不为localhost就需要使用 vim /ect/hosts 将自己主机名字添加在 localhost4这一行最后，添加自己的主机名保存即可
+</code></pre><h2 id="结合-spring-完成-ActiveMQ-编程"><a href="#结合-spring-完成-ActiveMQ-编程" class="headerlink" title="结合 spring 完成 ActiveMQ 编程"></a>结合 spring 完成 ActiveMQ 编程</h2><pre><code>1.在 activeMQ_spring 导入相关 jar 包，导入maven坐标
+</code></pre><p><img src="https://i.imgur.com/u7Jm2vX.png" alt=""></p>
+<pre><code>2、 编写配置生产者
+配置 activemq 连接工厂
+使用此方式需要连接网络加载名称空间，一般使用原生的配置    
+</code></pre><p><img src="https://i.imgur.com/xExYQqE.png" alt=""></p>
+<pre><code>配置 spring mq 管理工厂
+</code></pre><p><img src="https://i.imgur.com/5sCfpE0.png" alt=""></p>
+<pre><code>配置 jmsTemplate 模板，有两种方式，使用一种即可
+</code></pre><p><img src="https://i.imgur.com/8M0tPru.png" alt=""></p>
+<pre><code>完成代码
+</code></pre><p><img src="https://i.imgur.com/O0G8hz9.png" alt=""></p>
+<pre><code>3、 编写消费者代码
+配置只扫描 consumer 包，topic跟queue队列相同，但topic是一对多
+mapMessage和textMessage mapMessage是key-value的形式
+</code></pre><p><img src="https://i.imgur.com/BJ6LfY5.png" alt=""></p>
+<pre><code>配置 listener 监听器，在 applicationContext-mq-consumer.xml
+</code></pre><p><img src="https://i.imgur.com/BYc5Uql.png" alt=""></p>
 
-7、HINCRBYFLOAT key field increment 为哈希表 key 中的指定字段的浮点数值加上增量 increment 。
-
-8、HLEN key    获取哈希表中字段的数量
-
-9、HMGET key field1 [field2]    获取所有给定字段的值
-
-10、HMSET key field1 value1 [field2 value2 ]    同时将多个 field-value (域-值)对设置到哈希表 key 中。
-
-11、HSET key field value 将哈希表 key 中的字段 field 的值设为 value 。
-
-12、HSETNX key field value    只有在字段 field 不存在时，设置哈希表字段的值。
-</code></pre><h2 id="2-Redis-String-常用命令"><a href="#2-Redis-String-常用命令" class="headerlink" title="2.Redis String 常用命令"></a>2.Redis String 常用命令</h2><pre><code>1、SET key value  设置指定 key 的值
-
-2、GET key  获取指定 key 的值。
-
-3、GETRANGE key start end  返回 key 中字符串值的子字符
-
-4、GETSET key value  将给定 key 的值设为 value ，并返回 key 的旧值(old value)。
-
-5、GETBIT key offset 对 key 所储存的字符串值，获取指定偏移量上的位(bit)。
-
-6、MGET key1 [key2..]  获取所有(一个或多个)给定 key 的值。
-
-7、SETBIT key offset value  对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。
-
-8、SETEX key seconds value  将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。
-
-9、SETNX key value  只有在 key 不存在时设置 key 的值。
-
-10、SETRANGE key offset value 用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。
-
-11、STRLEN key  返回 key 所储存的字符串值的长度。
-
-12、MSET key value [key value ...]  同时设置一个或多个 key-value 对。
-
-13、MSETNX key value [key value ...]
-同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。
-
-14、PSETEX key milliseconds value
-这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。
-
-15、INCR key 将 key 中储存的数字值增一。
-
-16、INCRBY key increment 将 key 所储存的值加上给定的增量值（increment） 。
-
-17、INCRBYFLOAT key increment  将 key 所储存的值加上给定的浮点增量值（increment） 。
-
-18、DECR key 将 key 中储存的数字值减一。
-
-19、DECRBY key decrement key 所储存的值减去给定的减量值（decrement） 。
-
-20、APPEND key value
-如果 key 已经存在并且是一个字符串， APPEND 命令将 指定value 追加到改 key 原来的值（value）的末尾。
-</code></pre>
       
     </div>
     
@@ -424,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/24/linux常见命令/" rel="next" title="linux常见命令">
-                <i class="fa fa-chevron-left"></i> linux常见命令
+              <a href="/2018/02/25/redis缓存/" rel="next" title="redis缓存">
+                <i class="fa fa-chevron-left"></i> redis缓存
               </a>
             
           </div>
@@ -434,8 +457,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/24/webservice的Restful风格/" rel="prev" title="webservice的Restful风格">
-                webservice的Restful风格 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/27/linux常见问题/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -557,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Redis-hash-常用命令"><span class="nav-number">1.</span> <span class="nav-text">1.Redis hash 常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Redis-String-常用命令"><span class="nav-number">2.</span> <span class="nav-text">2.Redis String 常用命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ActiveMQ-的作用分析"><span class="nav-number">1.</span> <span class="nav-text">ActiveMQ 的作用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ActiveMQ-工作原理"><span class="nav-number">1.1.</span> <span class="nav-text">ActiveMQ 工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ActiveMQ-安装和使用"><span class="nav-number">2.</span> <span class="nav-text">ActiveMQ 安装和使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Java-程序操作-ActiveMQ（了解）"><span class="nav-number">3.</span> <span class="nav-text">使用 Java 程序操作 ActiveMQ（了解）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合-spring-完成-ActiveMQ-编程"><span class="nav-number">4.</span> <span class="nav-text">结合 spring 完成 ActiveMQ 编程</span></a></li></ol></div>
             
 
           </div>
