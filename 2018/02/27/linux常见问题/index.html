@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="1.手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法">
+<meta name="description" content="手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法如下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常见问题整合">
 <meta property="og:url" content="http://htuotuo.top/2018/02/27/linux常见问题/index.html">
 <meta property="og:site_name" content="tuotuo的博客">
-<meta property="og:description" content="1.手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法">
+<meta property="og:description" content="手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法如下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-27T01:35:52.458Z">
+<meta property="og:updated_time" content="2018-02-27T01:38:16.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题整合">
-<meta name="twitter:description" content="1.手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法">
+<meta name="twitter:description" content="手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法如下">
 
 
 
@@ -335,7 +335,7 @@
       
 
       
-        <h2 id="1-手动配置IP地址"><a href="#1-手动配置IP地址" class="headerlink" title="1.手动配置IP地址"></a>1.手动配置IP地址</h2><ul>
+        <h2 id="手动配置IP地址"><a href="#手动配置IP地址" class="headerlink" title="手动配置IP地址"></a>手动配置IP地址</h2><ul>
 <li><p>1、自动获取IP地址<br>  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。<br>  #dhclient 自动获取ip地址命令<br>  #ifconfig 查询系统里网卡信息，ip地址、MAC地址<br>  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。</p>
 </li>
 <li><p>2、手动设置ip地址</p>
@@ -359,8 +359,8 @@
 <p>  重启之后<br>  #ifconfig</p>
 </li>
 </ul>
-<h2 id="2-unzip命令安装"><a href="#2-unzip命令安装" class="headerlink" title="2.unzip命令安装"></a>2.unzip命令安装</h2><pre><code>yum install zip unzip
-</code></pre><h2 id="3-解压缩和压缩"><a href="#3-解压缩和压缩" class="headerlink" title="3.解压缩和压缩"></a>3.解压缩和压缩</h2><pre><code>tar命令位于/bin目录下，它能够将用户所指定的文件或目录打包成一个文件，但不做压缩。一般Linux上常用的压缩方式是选用tar将许多文件打包成一个文件，再以gzip压缩命令压缩成xxx.tar.gz(或称为xxx.tgz)的文件。
+<h2 id="unzip命令安装"><a href="#unzip命令安装" class="headerlink" title="unzip命令安装"></a>unzip命令安装</h2><pre><code>yum install zip unzip
+</code></pre><h2 id="解压缩和压缩"><a href="#解压缩和压缩" class="headerlink" title="解压缩和压缩"></a>解压缩和压缩</h2><pre><code>tar命令位于/bin目录下，它能够将用户所指定的文件或目录打包成一个文件，但不做压缩。一般Linux上常用的压缩方式是选用tar将许多文件打包成一个文件，再以gzip压缩命令压缩成xxx.tar.gz(或称为xxx.tgz)的文件。
 
 常用参数：
 -c：创建一个新tar文件
@@ -369,7 +369,7 @@
 -z：调用gzip压缩命令进行压缩
 -t：查看压缩文件的内容
 -x：解开tar文件
-</code></pre><h2 id="4-jdk配置"><a href="#4-jdk配置" class="headerlink" title="4.jdk配置"></a>4.jdk配置</h2><pre><code>//打开/etc/profile文件
+</code></pre><h2 id="jdk配置"><a href="#jdk配置" class="headerlink" title="jdk配置"></a>jdk配置</h2><pre><code>//打开/etc/profile文件
 # vim /etc/profile
 
 在文件末尾插入如下内容
@@ -380,10 +380,10 @@ export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 
 最后执行 source /etc/profile
-</code></pre><h2 id="5-删除"><a href="#5-删除" class="headerlink" title="5.删除"></a>5.删除</h2><pre><code>不询问递归删除（慎用）
+</code></pre><h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>不询问递归删除（慎用）
 rm -rf  a  ?  不询问递归删除
 rm -rf *   ?   删除所有文件
-</code></pre><h2 id="6-管道"><a href="#6-管道" class="headerlink" title="6.管道"></a>6.管道</h2><pre><code>管道是Linux命令中重要的一个概念，其作用是将一个命令的输出用作另一个命令的输入。
+</code></pre><h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><pre><code>管道是Linux命令中重要的一个概念，其作用是将一个命令的输出用作另一个命令的输入。
 示例
 ls --help | more  分页查询帮助信息
 ps –ef | grep java  查询名称中包含java的进程
@@ -391,7 +391,7 @@ ps –ef | grep java  查询名称中包含java的进程
 ifconfig | more
 cat index.html | more
 ps –ef | grep aio
-</code></pre><h2 id="7-关闭防火墙"><a href="#7-关闭防火墙" class="headerlink" title="7.关闭防火墙"></a>7.关闭防火墙</h2><pre><code>entOS 6.5关闭防火墙步骤
+</code></pre><h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><pre><code>entOS 6.5关闭防火墙步骤
 
 临时关闭命令：  service iptables stop 
 永久关闭防火墙：chkconfig iptables off
@@ -399,14 +399,14 @@ ps –ef | grep aio
 
 两个命令同时运行，运行完成后查看防火墙关闭状态 
 service iptables status
-</code></pre><h2 id="8-出现centos-yum报错Loaded-plugins-fastestmirror"><a href="#8-出现centos-yum报错Loaded-plugins-fastestmirror" class="headerlink" title="8.出现centos yum报错Loaded plugins: fastestmirror"></a>8.出现centos yum报错Loaded plugins: fastestmirror</h2><pre><code>vi /etc/yum/pluginconf.d/fastestmirror.conf 
+</code></pre><h2 id="出现centos-yum报错Loaded-plugins-fastestmirror"><a href="#出现centos-yum报错Loaded-plugins-fastestmirror" class="headerlink" title="出现centos yum报错Loaded plugins: fastestmirror"></a>出现centos yum报错Loaded plugins: fastestmirror</h2><pre><code>vi /etc/yum/pluginconf.d/fastestmirror.conf 
 enabled = 0
 
 vi /etc/yum.conf
 plugins=0
 
 yum clean dbcache
-</code></pre><h2 id="9-在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><a href="#9-在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64" class="headerlink" title="9.在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64"></a>9.在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</h2><pre><code>这种情况通常是，是因为没有配置DNS服务器。
+</code></pre><h2 id="在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><a href="#在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64" class="headerlink" title="在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64"></a>在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</h2><pre><code>这种情况通常是，是因为没有配置DNS服务器。
 
 解决方法：用VI编辑resolv.conf文件
 
@@ -418,8 +418,8 @@ nameserver 114.114.114.114    国内的
 
 wq
 保存退出即可
-</code></pre><h2 id="10-授予权限-c-权限不够"><a href="#10-授予权限-c-权限不够" class="headerlink" title="10.授予权限  ///**/c: 权限不够"></a>10.授予权限  /<strong>/</strong>/**/c: 权限不够</h2><pre><code>chmod +x /**/**/**/c
-</code></pre><h2 id="11-Redis的安装"><a href="#11-Redis的安装" class="headerlink" title="11.Redis的安装"></a>11.Redis的安装</h2><pre><code>Redis是c语言开发的。
+</code></pre><h2 id="授予权限-c-权限不够"><a href="#授予权限-c-权限不够" class="headerlink" title="授予权限  ///**/c: 权限不够"></a>授予权限  /<strong>/</strong>/**/c: 权限不够</h2><pre><code>chmod +x /**/**/**/c
+</code></pre><h2 id="Redis的安装"><a href="#Redis的安装" class="headerlink" title="Redis的安装"></a>Redis的安装</h2><pre><code>Redis是c语言开发的。
 安装redis需要c语言的编译环境。如果没有gcc需要在线安装。
 
 先查询系统中是否有gcc命令，如果出现下面提示，则表示你的系统中已经安装好了gcc命令    
@@ -683,7 +683,7 @@ mesg：允许vi显示其他用户用write写到自己终端上的信息
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-手动配置IP地址"><span class="nav-number">1.</span> <span class="nav-text">1.手动配置IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-unzip命令安装"><span class="nav-number">2.</span> <span class="nav-text">2.unzip命令安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-解压缩和压缩"><span class="nav-number">3.</span> <span class="nav-text">3.解压缩和压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-jdk配置"><span class="nav-number">4.</span> <span class="nav-text">4.jdk配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-删除"><span class="nav-number">5.</span> <span class="nav-text">5.删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-管道"><span class="nav-number">6.</span> <span class="nav-text">6.管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-关闭防火墙"><span class="nav-number">7.</span> <span class="nav-text">7.关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-出现centos-yum报错Loaded-plugins-fastestmirror"><span class="nav-number">8.</span> <span class="nav-text">8.出现centos yum报错Loaded plugins: fastestmirror</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><span class="nav-number">9.</span> <span class="nav-text">9.在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-授予权限-c-权限不够"><span class="nav-number">10.</span> <span class="nav-text">10.授予权限  ///**/c: 权限不够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Redis的安装"><span class="nav-number">11.</span> <span class="nav-text">11.Redis的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis的启动："><span class="nav-number">11.1.</span> <span class="nav-text">redis的启动：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum命令进行安装时可能出现："><span class="nav-number">12.</span> <span class="nav-text">在使用yum命令进行安装时可能出现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp命令"><span class="nav-number">13.</span> <span class="nav-text">cp命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑命令"><span class="nav-number">14.</span> <span class="nav-text">文本编辑命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入vi-vim的命令"><span class="nav-number">14.1.</span> <span class="nav-text">进入vi/vim的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕翻滚类命令"><span class="nav-number">14.2.</span> <span class="nav-text">屏幕翻滚类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入文本类命令"><span class="nav-number">14.3.</span> <span class="nav-text">插入文本类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除命令"><span class="nav-number">14.4.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索及替换命令"><span class="nav-number">14.5.</span> <span class="nav-text">搜索及替换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选项设置"><span class="nav-number">14.6.</span> <span class="nav-text">选项设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#末行模式命令"><span class="nav-number">14.7.</span> <span class="nav-text">末行模式命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动配置IP地址"><span class="nav-number">1.</span> <span class="nav-text">手动配置IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unzip命令安装"><span class="nav-number">2.</span> <span class="nav-text">unzip命令安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压缩和压缩"><span class="nav-number">3.</span> <span class="nav-text">解压缩和压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk配置"><span class="nav-number">4.</span> <span class="nav-text">jdk配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">6.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">7.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现centos-yum报错Loaded-plugins-fastestmirror"><span class="nav-number">8.</span> <span class="nav-text">出现centos yum报错Loaded plugins: fastestmirror</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><span class="nav-number">9.</span> <span class="nav-text">在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#授予权限-c-权限不够"><span class="nav-number">10.</span> <span class="nav-text">授予权限  ///**/c: 权限不够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的安装"><span class="nav-number">11.</span> <span class="nav-text">Redis的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis的启动："><span class="nav-number">11.1.</span> <span class="nav-text">redis的启动：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum命令进行安装时可能出现："><span class="nav-number">12.</span> <span class="nav-text">在使用yum命令进行安装时可能出现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp命令"><span class="nav-number">13.</span> <span class="nav-text">cp命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑命令"><span class="nav-number">14.</span> <span class="nav-text">文本编辑命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入vi-vim的命令"><span class="nav-number">14.1.</span> <span class="nav-text">进入vi/vim的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕翻滚类命令"><span class="nav-number">14.2.</span> <span class="nav-text">屏幕翻滚类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入文本类命令"><span class="nav-number">14.3.</span> <span class="nav-text">插入文本类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除命令"><span class="nav-number">14.4.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索及替换命令"><span class="nav-number">14.5.</span> <span class="nav-text">搜索及替换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选项设置"><span class="nav-number">14.6.</span> <span class="nav-text">选项设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#末行模式命令"><span class="nav-number">14.7.</span> <span class="nav-text">末行模式命令</span></a></li></ol></li></ol></div>
             
 
           </div>
