@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="tuotuo的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="solr单机版搭建Solr的环境Solr是java开发。 需要安装jdk。 安装环境Linux。 需要安装Tomcat。 搭建步骤第一步：把solr 的压缩包上传到Linux系统 第二步：解压solr。 第三步：安装Tomcat，解压缩即可。 第四步：把solr部署到Tomcat下。 第五步：解压缩war包。启动Tomcat解压。 第六步：把/root/solr-4.10.3/example/li">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solr单机版和集群的搭建">
+<meta property="og:url" content="http://htuotuo.top/2018/03/08/solr集群搭建/index.html">
+<meta property="og:site_name" content="tuotuo的博客">
+<meta property="og:description" content="solr单机版搭建Solr的环境Solr是java开发。 需要安装jdk。 安装环境Linux。 需要安装Tomcat。 搭建步骤第一步：把solr 的压缩包上传到Linux系统 第二步：解压solr。 第三步：安装Tomcat，解压缩即可。 第四步：把solr部署到Tomcat下。 第五步：解压缩war包。启动Tomcat解压。 第六步：把/root/solr-4.10.3/example/li">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/Vhkt3Y1.png">
+<meta property="og:image" content="https://i.imgur.com/jE9Bdud.png">
+<meta property="og:image" content="https://i.imgur.com/PNRFZEL.png">
+<meta property="og:image" content="https://i.imgur.com/JT2N97D.png">
+<meta property="og:image" content="https://i.imgur.com/aHjY2tm.png">
+<meta property="og:image" content="https://i.imgur.com/ApPY8hw.png">
+<meta property="og:image" content="https://i.imgur.com/jdPnUdR.png">
+<meta property="og:image" content="https://i.imgur.com/0D9jLX2.png">
+<meta property="og:image" content="https://i.imgur.com/VjGEBlb.png">
+<meta property="og:image" content="https://i.imgur.com/qFnjlKI.png">
+<meta property="og:updated_time" content="2018-03-06T07:41:37.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solr单机版和集群的搭建">
+<meta name="twitter:description" content="solr单机版搭建Solr的环境Solr是java开发。 需要安装jdk。 安装环境Linux。 需要安装Tomcat。 搭建步骤第一步：把solr 的压缩包上传到Linux系统 第二步：解压solr。 第三步：安装Tomcat，解压缩即可。 第四步：把solr部署到Tomcat下。 第五步：解压缩war包。启动Tomcat解压。 第六步：把/root/solr-4.10.3/example/li">
+<meta name="twitter:image" content="https://i.imgur.com/Vhkt3Y1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://htuotuo.top/2018/03/08/solr集群搭建/"/>
+
+
+
+
+
+  <title>solr单机版和集群的搭建 | tuotuo的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">tuotuo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">tuotuo</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://htuotuo.top/2018/03/08/solr集群搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tuotuo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tuotuo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">solr单机版和集群的搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T15:06:36+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="solr单机版搭建"><a href="#solr单机版搭建" class="headerlink" title="solr单机版搭建"></a>solr单机版搭建</h1><h2 id="Solr的环境"><a href="#Solr的环境" class="headerlink" title="Solr的环境"></a>Solr的环境</h2><pre><code>Solr是java开发。
+需要安装jdk。
+安装环境Linux。
+需要安装Tomcat。
+</code></pre><h3 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h3><pre><code>第一步：把solr 的压缩包上传到Linux系统
+第二步：解压solr。
+第三步：安装Tomcat，解压缩即可。
+第四步：把solr部署到Tomcat下。
+第五步：解压缩war包。启动Tomcat解压。
+第六步：把/root/solr-4.10.3/example/lib/ext目录下的所有的jar包，添加到solr工程中。
+[root@localhost ext]# pwd
+/root/solr-4.10.3/example/lib/ext
+[root@localhost ext]# cp * /usr/local/solr/tomcat/webapps/solr/WEB-INF/lib/
+第七步：创建一个solrhome。/example/solr目录就是一个solrhome。复制此目录到/usr/local/solr/solrhome
+[root@localhost example]# pwd
+/root/solr-4.10.3/example
+[root@localhost example]# cp -r solr /usr/local/solr/solrhome
+[root@localhost example]# 
+第八步：关联solr及solrhome。需要修改solr工程的web.xml文件。
+</code></pre><p><img src="https://i.imgur.com/Vhkt3Y1.png" alt="">        </p>
+<pre><code>第九步：启动Tomcat
+http://192.168.25.154:8080/solr/
+和windows下的配置完全一样。
+</code></pre><h3 id="Solr的使用"><a href="#Solr的使用" class="headerlink" title="Solr的使用"></a>Solr的使用</h3><pre><code>添加文档必须有id域，其他域 必须在solr的schema.xml中定义
+</code></pre><h2 id="配置业务域"><a href="#配置业务域" class="headerlink" title="配置业务域"></a>配置业务域</h2><pre><code>schema.xml中定义
+1、商品Id
+2、商品标题
+3、商品卖点
+4、商品价格
+5、商品图片
+6、分类名称
+7、商品描述
+
+创建对应的业务域。需要制定中文分析器。
+
+创建步骤：
+第一步：把中文分析器添加到工程中。
+1、把IKAnalyzer2012FF_u1.jar添加到solr工程的lib目录下
+2、把扩展词典、配置文件放到solr工程的WEB-INF/classes目录下。
+第二步：配置一个FieldType，制定使用IKAnalyzer
+修改schema.xml文件
+修改Solr的schema.xml文件，添加FieldType：
+&lt;fieldType name=&quot;text_ik&quot; class=&quot;solr.TextField&quot;&gt;
+  &lt;analyzer class=&quot;org.wltea.analyzer.lucene.IKAnalyzer&quot;/&gt;
+&lt;/fieldType&gt;
+
+第三步：配置业务域，type制定使用自定义的FieldType。
+设置业务系统Field
+&lt;field name=&quot;item_title&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_sell_point&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_price&quot;  type=&quot;long&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+&lt;field name=&quot;item_image&quot; type=&quot;string&quot; indexed=&quot;false&quot; stored=&quot;true&quot; /&gt;
+&lt;field name=&quot;item_category_name&quot; type=&quot;string&quot; indexed=&quot;true&quot; stored=&quot;true&quot; /&gt;
+&lt;field name=&quot;item_desc&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;false&quot; /&gt;
+
+&lt;field name=&quot;item_keywords&quot; type=&quot;text_ik&quot; indexed=&quot;true&quot; stored=&quot;false&quot; multiValued=&quot;true&quot;/&gt;
+&lt;copyField source=&quot;item_title&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_sell_point&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_category_name&quot; dest=&quot;item_keywords&quot;/&gt;
+&lt;copyField source=&quot;item_desc&quot; dest=&quot;item_keywords&quot;/&gt;
+
+第四步：重启tomcat
+</code></pre><h2 id="使用solrJ管理索引库"><a href="#使用solrJ管理索引库" class="headerlink" title="使用solrJ管理索引库"></a>使用solrJ管理索引库</h2><pre><code>使用SolrJ可以实现索引库的增删改查操作。
+
+2.1.添加文档
+第一步：把solrJ的jar包添加到工程中。
+第二步：创建一个SolrServer，使用HttpSolrServer创建对象。
+第三步：创建一个文档对象SolrInputDocument对象。
+第四步：向文档中添加域。必须有id域，域的名称必须在schema.xml中定义。
+第五步：把文档添加到索引库中。
+第六步：提交。
+@Test
+public void addDocument() throws Exception {
+    // 第一步：把solrJ的jar包添加到工程中。
+    // 第二步：创建一个SolrServer，使用HttpSolrServer创建对象。
+    SolrServer solrServer = new HttpSolrServer(&quot;http://192.168.25.154:8080/solr&quot;);
+    // 第三步：创建一个文档对象SolrInputDocument对象。
+    SolrInputDocument document = new SolrInputDocument();
+    // 第四步：向文档中添加域。必须有id域，域的名称必须在schema.xml中定义。
+    document.addField(&quot;id&quot;, &quot;test001&quot;);
+    document.addField(&quot;item_title&quot;, &quot;测试商品&quot;);
+    document.addField(&quot;item_price&quot;, &quot;199&quot;);
+    // 第五步：把文档添加到索引库中。
+    solrServer.add(document);
+    // 第六步：提交。
+    solrServer.commit();
+}
+
+2.2.删除文档
+2.2.1.根据id删除
+第一步：创建一个SolrServer对象。
+第二步：调用SolrServer对象的根据id删除的方法。
+第三步：提交。
+@Test
+public void deleteDocumentById() throws Exception {
+    // 第一步：创建一个SolrServer对象。
+    SolrServer solrServer = new HttpSolrServer(&quot;http://192.168.25.154:8080/solr&quot;);
+    // 第二步：调用SolrServer对象的根据id删除的方法。
+    solrServer.deleteById(&quot;1&quot;);
+    // 第三步：提交。
+    solrServer.commit();
+}
+
+2.2.2.根据查询删除
+@Test
+public void deleteDocumentByQuery() throws Exception {
+    SolrServer solrServer = new HttpSolrServer(&quot;http://192.168.25.154:8080/solr&quot;);
+    solrServer.deleteByQuery(&quot;title:change.me&quot;);
+    solrServer.commit();
+}
+
+2.3.查询索引库
+查询步骤：
+第一步：创建一个SolrServer对象
+第二步：创建一个SolrQuery对象。
+第三步：向SolrQuery中添加查询条件、过滤条件。。。
+第四步：执行查询。得到一个Response对象。
+第五步：取查询结果。
+第六步：遍历结果并打印。
+
+2.3.1.简单查询
+@Test
+public void queryDocument() throws Exception {
+    // 第一步：创建一个SolrServer对象
+    SolrServer solrServer = new HttpSolrServer(&quot;http://192.168.25.154:8080/solr&quot;);
+    // 第二步：创建一个SolrQuery对象。
+    SolrQuery query = new SolrQuery();
+    // 第三步：向SolrQuery中添加查询条件、过滤条件。。。
+    query.setQuery(&quot;*:*&quot;);
+    // 第四步：执行查询。得到一个Response对象。
+    QueryResponse response = solrServer.query(query);
+    // 第五步：取查询结果。
+    SolrDocumentList solrDocumentList = response.getResults();
+    System.out.println(&quot;查询结果的总记录数：&quot; + solrDocumentList.getNumFound());
+    // 第六步：遍历结果并打印。
+    for (SolrDocument solrDocument : solrDocumentList) {
+        System.out.println(solrDocument.get(&quot;id&quot;));
+        System.out.println(solrDocument.get(&quot;item_title&quot;));
+        System.out.println(solrDocument.get(&quot;item_price&quot;));
+    }
+}
+
+2.3.2.带高亮显示
+@Test
+public void queryDocumentWithHighLighting() throws Exception {
+    // 第一步：创建一个SolrServer对象
+    SolrServer solrServer = new HttpSolrServer(&quot;http://192.168.25.154:8080/solr&quot;);
+    // 第二步：创建一个SolrQuery对象。
+    SolrQuery query = new SolrQuery();
+    // 第三步：向SolrQuery中添加查询条件、过滤条件。。。
+    query.setQuery(&quot;测试&quot;);
+    //指定默认搜索域
+    query.set(&quot;df&quot;, &quot;item_keywords&quot;);
+    //开启高亮显示
+    query.setHighlight(true);
+    //高亮显示的域
+    query.addHighlightField(&quot;item_title&quot;);
+    query.setHighlightSimplePre(&quot;&lt;em&gt;&quot;);
+    query.setHighlightSimplePost(&quot;&lt;/em&gt;&quot;);
+    // 第四步：执行查询。得到一个Response对象。
+    QueryResponse response = solrServer.query(query);
+    // 第五步：取查询结果。
+    SolrDocumentList solrDocumentList = response.getResults();
+    System.out.println(&quot;查询结果的总记录数：&quot; + solrDocumentList.getNumFound());
+    // 第六步：遍历结果并打印。
+    for (SolrDocument solrDocument : solrDocumentList) {
+        System.out.println(solrDocument.get(&quot;id&quot;));
+        //取高亮显示
+        Map&lt;String, Map&lt;String, List&lt;String&gt;&gt;&gt; highlighting = response.getHighlighting();
+        List&lt;String&gt; list = highlighting.get(solrDocument.get(&quot;id&quot;)).get(&quot;item_title&quot;);
+        String itemTitle = null;
+        if (list != null &amp;&amp; list.size() &gt; 0) {
+            itemTitle = list.get(0);
+        } else {
+            itemTitle = (String) solrDocument.get(&quot;item_title&quot;);
+        }
+        System.out.println(itemTitle);
+        System.out.println(solrDocument.get(&quot;item_price&quot;));
+    }
+}
+</code></pre><h1 id="solr集群搭建"><a href="#solr集群搭建" class="headerlink" title="solr集群搭建"></a>solr集群搭建</h1><h2 id="什么是SolrCloud"><a href="#什么是SolrCloud" class="headerlink" title="什么是SolrCloud"></a>什么是SolrCloud</h2><pre><code>olrCloud(solr 云)是Solr提供的分布式搜索方案，当你需要大规模，容错，分布式索引和检索能力时使用 SolrCloud。当一个系统的索引数据量少的时候是不需要使用SolrCloud的，当索引量很大，搜索请求并发很高，这时需要使用SolrCloud来满足这些需求。
+ SolrCloud是基于Solr和Zookeeper的分布式搜索方案，它的主要思想是使用Zookeeper作为集群的配置信息中心。
+它有几个特色功能：
+1）集中式的配置信息
+2）自动容错
+3）近实时搜索
+4）查询时自动负载均衡
+</code></pre><h2 id="Solr集群的系统架构"><a href="#Solr集群的系统架构" class="headerlink" title="Solr集群的系统架构"></a>Solr集群的系统架构</h2><p><img src="https://i.imgur.com/jE9Bdud.png" alt=""></p>
+<pre><code>3.1.物理结构
+三个Solr实例（ 每个实例包括两个Core），组成一个SolrCloud。
+
+3.2.逻辑结构
+索引集合包括两个Shard（shard1和shard2），shard1和shard2分别由三个Core组成，其中一个Leader两个Replication，Leader是由zookeeper选举产生，zookeeper控制每个shard上三个Core的索引数据一致，解决高可用问题。
+用户发起索引请求分别从shard1和shard2上获取，解决高并发问题。
+
+3.2.1.collection
+Collection在SolrCloud集群中是一个逻辑意义上的完整的索引结构。它常常被划分为一个或多个Shard（分片），它们使用相同的配置信息。
+比如：针对商品信息搜索可以创建一个collection。
+ collection=shard1+shard2+....+shardX
+
+3.2.2.Core
+每个Core是Solr中一个独立运行单位，提供 索引和搜索服务。一个shard需要由一个Core或多个Core组成。由于collection由多个shard组成所以collection一般由多个core组成。
+
+3.2.3.Master或Slave
+Master是master-slave结构中的主结点（通常说主服务器），Slave是master-slave结构中的从结点（通常说从服务器或备服务器）。同一个Shard下master和slave存储的数据是一致的，这是为了达到高可用目的。
+
+3.2.4.Shard
+Collection的逻辑分片。每个Shard被化成一个或者多个replication，通过选举确定哪个是Leader。
+</code></pre><h2 id="需要实现的solr集群架构"><a href="#需要实现的solr集群架构" class="headerlink" title="需要实现的solr集群架构"></a>需要实现的solr集群架构</h2><p><img src="https://i.imgur.com/PNRFZEL.png" alt=""></p>
+<pre><code>Zookeeper作为集群的管理工具。
+1、集群管理：容错、负载均衡。
+2、配置文件的集中管理
+3、集群的入口
+
+需要实现zookeeper 高可用。需要搭建集群。建议是奇数节点。需要三个zookeeper服务器。
+
+搭建solr集群需要7台服务器。
+
+搭建伪分布式：
+需要三个zookeeper节点
+需要四个tomcat节点。
+
+建议虚拟机的内容1G以上。
+</code></pre><h2 id="5-安装步骤"><a href="#5-安装步骤" class="headerlink" title="5.安装步骤"></a>5.安装步骤</h2><pre><code>5.1.Zookeeper集群搭建
+第一步：需要安装jdk环境。
+第二步：把zookeeper的压缩包上传到服务器。
+第三步：解压缩。
+第四步：把zookeeper复制三份。
+[root@localhost ~]# mkdir /usr/local/solr-cloud
+[root@localhost ~]# cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper01
+[root@localhost ~]# cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper02
+[root@localhost ~]# cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper03
+第五步：在每个zookeeper目录下创建一个data目录。
+第六步：在data目录下创建一个myid文件，文件名就叫做“myid”。内容就是每个实例的id。例如1、2、3
+[root@localhost data]# echo 1 &gt;&gt; myid
+[root@localhost data]# ll
+total 4
+-rw-r--r--. 1 root root 2 Apr  7 18:23 myid
+[root@localhost data]# cat myid 
+1
+第七步：修改配置文件。把conf目录下的zoo_sample.cfg文件改名为zoo.cfg
+</code></pre><p><img src="https://i.imgur.com/JT2N97D.png" alt=""></p>
+<pre><code>server.1=192.168.25.154:2881:3881
+server.2=192.168.25.154:2882:3882
+server.3=192.168.25.154:2883:3883
+
+第八步：启动每个zookeeper实例。
+启动bin/zkServer.sh start
+
+查看zookeeper的状态：
+bin/zkServer.sh status
+
+5.2.Solr集群的搭建
+第一步：创建四个tomcat实例。每个tomcat运行在不同的端口。8180、8280、8380、8480
+第二步：部署solr的war包。把单机版的solr工程复制到集群中的tomcat中。
+第三步：为每个solr实例创建一个对应的solrhome。使用单机版的solrhome复制四份。
+第四步：需要修改solr的web.xml文件。把solrhome关联起来。
+第五步：配置solrCloud相关的配置。每个solrhome下都有一个solr.xml，把其中的ip及端口号配置好。
+</code></pre><p><img src="https://i.imgur.com/aHjY2tm.png" alt=""></p>
+<pre><code>第六步：让zookeeper统一管理配置文件。需要把solrhome/collection1/conf目录上传到zookeeper。上传任意solrhome中的配置文件即可。
+使用工具上传配置文件：/root/solr-4.10.3/example/scripts/cloud-scripts/zkcli.sh
+./zkcli.sh -zkhost 192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183 -cmd upconfig -confdir /usr/local/solr-cloud/solrhome01/collection1/conf -confname myconf
+查看zookeeper上的配置文件：
+使用zookeeper目录下的bin/zkCli.sh命令查看zookeeper上的配置文件：
+[root@localhost bin]# ./zkCli.sh 
+[zk: localhost:2181(CONNECTED) 0] ls /
+[configs, zookeeper]
+[zk: localhost:2181(CONNECTED) 1] ls /configs
+[myconf]
+[zk: localhost:2181(CONNECTED) 2] ls /configs/myconf
+[admin-extra.menu-top.html, currency.xml, protwords.txt, mapping-FoldToASCII.txt, _schema_analysis_synonyms_english.json, _rest_managed.json, solrconfig.xml, _schema_analysis_stopwords_english.json, stopwords.txt, lang, spellings.txt, mapping-ISOLatin1Accent.txt, admin-extra.html, xslt, synonyms.txt, scripts.conf, update-script.js, velocity, elevate.xml, admin-extra.menu-bottom.html, clustering, schema.xml]
+[zk: localhost:2181(CONNECTED) 3] 
+退出：
+[zk: localhost:2181(CONNECTED) 3] quit
+
+第七步：修改tomcat/bin目录下的catalina.sh 文件，关联solr和zookeeper。
+把此配置添加到配置文件中：
+JAVA_OPTS=&quot;-DzkHost=192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183&quot;
+</code></pre><p><img src="https://i.imgur.com/ApPY8hw.png" alt=""></p>
+<pre><code>第八步：启动每个tomcat实例。要保证zookeeper集群是启动状态。
+第九步：访问集群
+</code></pre><p><img src="https://i.imgur.com/jdPnUdR.png" alt=""></p>
+<pre><code>第十步：创建新的Collection进行分片处理。
+http://192.168.25.154:8180/solr/admin/collections?action=CREATE&amp;name=collection2&amp;numShards=2&amp;replicationFactor=2
+</code></pre><p><img src="https://i.imgur.com/0D9jLX2.png" alt="">    </p>
+<pre><code>第十一步：删除不用的Collection。
+http://192.168.25.154:8180/solr/admin/collections?action=DELETE&amp;name=collection1
+</code></pre><p><img src="https://i.imgur.com/VjGEBlb.png" alt=""></p>
+<p><img src="https://i.imgur.com/qFnjlKI.png" alt=""></p>
+<pre><code>6.使用solrJ管理集群
+6.1.添加文档
+使用步骤：
+第一步：把solrJ相关的jar包添加到工程中。
+第二步：创建一个SolrServer对象，需要使用CloudSolrServer子类。构造方法的参数是zookeeper的地址列表。
+第三步：需要设置DefaultCollection属性。
+第四步：创建一SolrInputDocument对象。
+第五步：向文档对象中添加域
+第六步：把文档对象写入索引库。
+第七步：提交。
+
+@Test
+    public void testSolrCloudAddDocument() throws Exception {
+        // 第一步：把solrJ相关的jar包添加到工程中。
+        // 第二步：创建一个SolrServer对象，需要使用CloudSolrServer子类。构造方法的参数是zookeeper的地址列表。
+        //参数是zookeeper的地址列表，使用逗号分隔
+        CloudSolrServer solrServer = new CloudSolrServer(&quot;192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183&quot;);
+        // 第三步：需要设置DefaultCollection属性。
+        solrServer.setDefaultCollection(&quot;collection2&quot;);
+        // 第四步：创建一SolrInputDocument对象。
+        SolrInputDocument document = new SolrInputDocument();
+        // 第五步：向文档对象中添加域
+        document.addField(&quot;item_title&quot;, &quot;测试商品&quot;);
+        document.addField(&quot;item_price&quot;, &quot;100&quot;);
+        document.addField(&quot;id&quot;, &quot;test001&quot;);
+        // 第六步：把文档对象写入索引库。
+        solrServer.add(document);
+        // 第七步：提交。
+        solrServer.commit();
+
+    }
+
+6.2.查询文档
+创建一个CloudSolrServer对象，其他处理和单机版一致。
+
+7.把搜索功能切换到集群版
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context4.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx4.2.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util4.2.xsd&quot;&gt;
+
+    &lt;!-- 单机版solr服务配置 --&gt;
+    &lt;!-- &lt;bean id=&quot;httpSolrServer&quot; class=&quot;org.apache.solr.client.solrj.impl.HttpSolrServer&quot;&gt;
+        &lt;constructor-arg name=&quot;baseURL&quot; value=&quot;http://192.168.25.154:8080/solr&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt; --&gt;
+    &lt;!-- 集群版solr服务 --&gt;
+    &lt;bean id=&quot;cloudSolrServer&quot; class=&quot;org.apache.solr.client.solrj.impl.CloudSolrServer&quot;&gt;
+        &lt;constructor-arg name=&quot;zkHost&quot; value=&quot;192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183&quot;&gt;&lt;/constructor-arg&gt;    
+        &lt;property name=&quot;defaultCollection&quot; value=&quot;collection2&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/08/网页静态化方案/" rel="next" title="网页静态化部署方案">
+                <i class="fa fa-chevron-left"></i> 网页静态化部署方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tuotuo</p>
+              <p class="site-description motion-element" itemprop="description">自己的鞋子，自己知道紧在哪里。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#solr单机版搭建"><span class="nav-number">1.</span> <span class="nav-text">solr单机版搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solr的环境"><span class="nav-number">1.1.</span> <span class="nav-text">Solr的环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建步骤"><span class="nav-number">1.1.1.</span> <span class="nav-text">搭建步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solr的使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">Solr的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置业务域"><span class="nav-number">1.2.</span> <span class="nav-text">配置业务域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用solrJ管理索引库"><span class="nav-number">1.3.</span> <span class="nav-text">使用solrJ管理索引库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solr集群搭建"><span class="nav-number">2.</span> <span class="nav-text">solr集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是SolrCloud"><span class="nav-number">2.1.</span> <span class="nav-text">什么是SolrCloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solr集群的系统架构"><span class="nav-number">2.2.</span> <span class="nav-text">Solr集群的系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要实现的solr集群架构"><span class="nav-number">2.3.</span> <span class="nav-text">需要实现的solr集群架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-安装步骤"><span class="nav-number">2.4.</span> <span class="nav-text">5.安装步骤</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tuotuo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+  </div>
+  
+	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
