@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="tuotuo的博客">
 <meta property="og:description" content="手动配置IP地址自动获取IP地址虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。 #dhclient 自动获取ip地址命令 #ifconfig 查询系统里网卡信息，ip地址、MAC地址 分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。 手动设置ip地址如果虚拟机不能自动获取IP，只能手动配置，配置方法如下： 输入命令 #vi /et">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-24T12:32:03.480Z">
+<meta property="og:updated_time" content="2018-03-14T04:55:26.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux常见命令">
 <meta name="twitter:description" content="手动配置IP地址自动获取IP地址虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。 #dhclient 自动获取ip地址命令 #ifconfig 查询系统里网卡信息，ip地址、MAC地址 分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。 手动设置ip地址如果虚拟机不能自动获取IP，只能手动配置，配置方法如下： 输入命令 #vi /et">
@@ -565,7 +565,56 @@ mesg：允许vi显示其他用户用write写到自己终端上的信息
 ：q!：不保存文件并退出vi
 ：!command：执行shell命令command
 ：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入
-：r!command：将命令command的输出结果放到当前行 
+：r!command：将命令command的输出结果放到当前行
+</code></pre><h2 id="linux查找日志技巧"><a href="#linux查找日志技巧" class="headerlink" title="linux查找日志技巧"></a>linux查找日志技巧</h2><pre><code>tail  -n  10  test.log   查询日志尾部最后10行的日志;
+
+tail -n +10 test.log    查询10行之后的所有日志;
+
+head -n 10  test.log   查询日志文件中的头10行日志;
+
+head -n -10  test.log   查询日志文件除了最后10行的其他所有日志;
+
+
+
+场景1: 按行号查看---过滤出关键字附近的日志
+
+因为通常时候我们用grep拿到的日志很少,我们需要查看附近的日志.
+
+我是这样做的,首先: cat -n test.log |grep &quot;地形&quot;  得到关键日志的行号
+
+
+
+&lt;3&gt;得到&quot;地形&quot;关键字所在的行号是102行. 此时如果我想查看这个关键字前10行和后10行的日志:
+
+cat -n test.log |tail -n +92|head -n 20
+
+tail -n +92表示查询92行之后的日志
+
+head -n 20 则表示在前面的查询结果里再查前20条记录
+
+
+
+场景2:那么按日期怎么查呢?  通常我们非常需要查找指定时间端的日志
+
+sed -n &apos;/2014-12-17 16:17:20/,/2014-12-17 16:17:36/p&apos;  test.log
+
+特别说明:上面的两个日期必须是日志中打印出来的日志,否则无效.
+
+
+
+关于日期打印,可以先 grep &apos;2014-12-17 16:17:20&apos; test.log 来确定日志中是否有该时间点,以确保第4步可以拿到日志
+
+这个根据时间段查询日志是非常有用的命令.
+
+6
+
+如果我们查找的日志很多,打印在屏幕上不方便查看, 有两个方法:
+
+(1)使用more和less命令, 如: cat -n test.log |grep &quot;地形&quot; |more     这样就分页打印了,通过点击空格键翻页
+
+(2)使用 &gt;xxx.txt 将其保存到文件中,到时可以拉下这个文件分析.如:
+
+cat -n test.log |grep &quot;地形&quot;  &gt;xxx.txt
 </code></pre>
       
     </div>
@@ -723,7 +772,7 @@ mesg：允许vi显示其他用户用write写到自己终端上的信息
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动配置IP地址"><span class="nav-number">1.</span> <span class="nav-text">手动配置IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动获取IP地址"><span class="nav-number">1.1.</span> <span class="nav-text">自动获取IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动设置ip地址"><span class="nav-number">1.2.</span> <span class="nav-text">手动设置ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用NAT模式"><span class="nav-number">1.3.</span> <span class="nav-text">使用NAT模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unzip命令安装"><span class="nav-number">2.</span> <span class="nav-text">unzip命令安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压缩和压缩"><span class="nav-number">3.</span> <span class="nav-text">解压缩和压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk配置"><span class="nav-number">4.</span> <span class="nav-text">jdk配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">6.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">7.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现centos-yum报错Loaded-plugins-fastestmirror"><span class="nav-number">8.</span> <span class="nav-text">出现centos yum报错Loaded plugins: fastestmirror</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><span class="nav-number">9.</span> <span class="nav-text">在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#授予权限-c-权限不够"><span class="nav-number">10.</span> <span class="nav-text">授予权限  ///**/c: 权限不够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的安装"><span class="nav-number">11.</span> <span class="nav-text">Redis的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis的启动："><span class="nav-number">11.1.</span> <span class="nav-text">redis的启动：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum命令进行安装时可能出现："><span class="nav-number">12.</span> <span class="nav-text">在使用yum命令进行安装时可能出现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp命令"><span class="nav-number">13.</span> <span class="nav-text">cp命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑命令"><span class="nav-number">14.</span> <span class="nav-text">文本编辑命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入vi-vim的命令"><span class="nav-number">14.1.</span> <span class="nav-text">进入vi/vim的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕翻滚类命令"><span class="nav-number">14.2.</span> <span class="nav-text">屏幕翻滚类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入文本类命令"><span class="nav-number">14.3.</span> <span class="nav-text">插入文本类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除命令"><span class="nav-number">14.4.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索及替换命令"><span class="nav-number">14.5.</span> <span class="nav-text">搜索及替换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选项设置"><span class="nav-number">14.6.</span> <span class="nav-text">选项设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#末行模式命令"><span class="nav-number">14.7.</span> <span class="nav-text">末行模式命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动配置IP地址"><span class="nav-number">1.</span> <span class="nav-text">手动配置IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动获取IP地址"><span class="nav-number">1.1.</span> <span class="nav-text">自动获取IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动设置ip地址"><span class="nav-number">1.2.</span> <span class="nav-text">手动设置ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用NAT模式"><span class="nav-number">1.3.</span> <span class="nav-text">使用NAT模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unzip命令安装"><span class="nav-number">2.</span> <span class="nav-text">unzip命令安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压缩和压缩"><span class="nav-number">3.</span> <span class="nav-text">解压缩和压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk配置"><span class="nav-number">4.</span> <span class="nav-text">jdk配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">6.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">7.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现centos-yum报错Loaded-plugins-fastestmirror"><span class="nav-number">8.</span> <span class="nav-text">出现centos yum报错Loaded plugins: fastestmirror</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum时如果出现：Cannot-find-a-valid-baseurl-for-repo-base-7-x86-64"><span class="nav-number">9.</span> <span class="nav-text">在使用yum时如果出现：Cannot find a valid baseurl for repo: base/7/x86_64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#授予权限-c-权限不够"><span class="nav-number">10.</span> <span class="nav-text">授予权限  ///**/c: 权限不够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的安装"><span class="nav-number">11.</span> <span class="nav-text">Redis的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis的启动："><span class="nav-number">11.1.</span> <span class="nav-text">redis的启动：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在使用yum命令进行安装时可能出现："><span class="nav-number">12.</span> <span class="nav-text">在使用yum命令进行安装时可能出现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp命令"><span class="nav-number">13.</span> <span class="nav-text">cp命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本编辑命令"><span class="nav-number">14.</span> <span class="nav-text">文本编辑命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入vi-vim的命令"><span class="nav-number">14.1.</span> <span class="nav-text">进入vi/vim的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕翻滚类命令"><span class="nav-number">14.2.</span> <span class="nav-text">屏幕翻滚类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入文本类命令"><span class="nav-number">14.3.</span> <span class="nav-text">插入文本类命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除命令"><span class="nav-number">14.4.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索及替换命令"><span class="nav-number">14.5.</span> <span class="nav-text">搜索及替换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选项设置"><span class="nav-number">14.6.</span> <span class="nav-text">选项设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#末行模式命令"><span class="nav-number">14.7.</span> <span class="nav-text">末行模式命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux查找日志技巧"><span class="nav-number">15.</span> <span class="nav-text">linux查找日志技巧</span></a></li></ol></div>
             
 
           </div>
