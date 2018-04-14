@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="tuotuo的博客">
 <meta property="og:description" content="手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法如下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-27T01:38:16.977Z">
+<meta property="og:updated_time" content="2018-04-08T08:07:01.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题整合">
 <meta name="twitter:description" content="手动配置IP地址 1、自动获取IP地址  虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。  #dhclient 自动获取ip地址命令  #ifconfig 查询系统里网卡信息，ip地址、MAC地址  分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。  2、手动设置ip地址   如果虚拟机不能自动获取IP，只能手动配置，配置方法如下">
@@ -380,6 +380,9 @@ export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 
 最后执行 source /etc/profile
+如果出现 -bash: /usr/local/jdk1.8.0_65/bin/java: Permission denied 
+这是因为访问权限不足
+执行以下命令：chmod 775 /home/jdk.bin
 </code></pre><h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>不询问递归删除（慎用）
 rm -rf  a  ?  不询问递归删除
 rm -rf *   ?   删除所有文件
@@ -643,7 +646,7 @@ mesg：允许vi显示其他用户用write写到自己终端上的信息
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
