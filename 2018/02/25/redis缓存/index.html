@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/vUAokJA.png">
 <meta property="og:image" content="https://i.imgur.com/R9unXjI.png">
-<meta property="og:updated_time" content="2018-02-26T08:19:13.026Z">
+<meta property="og:updated_time" content="2018-04-18T01:09:14.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis缓存">
 <meta name="twitter:description" content="1、Redis服务器搭建 2、向业务逻辑中添加缓存。 3、使用redis做缓存 4、缓存同步。 5、Solr服务器安装 1.首页面的展示流程首页是系统的门户，也就是系统的入口。所以首页的访问量是这个系统最大的。如果每次展示首页都从数据库中查询首页的内容信息，那么势必会对数据库造成很大的压力，所以需要使用缓存来减轻数据库压力。 实现缓存的工具有很多，现在比较流行的是redis。 2.Redis的安装">
@@ -358,6 +358,9 @@
 把/root/redis-3.0.0/redis.conf复制到/usr/local/redis/bin目录下
 [root@localhost redis-3.0.0]# cp redis.conf /usr/local/redis/bin/
 修改配置文件：
+)首先编辑conf文件，将daemonize属性改为yes（表明需要在后台运行）
+
+vim redis.conf 
 
 [root@localhost bin]# ./redis-server redis.conf
 查看redis进程：

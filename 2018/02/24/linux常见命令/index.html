@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="tuotuo的博客">
 <meta property="og:description" content="手动配置IP地址自动获取IP地址虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。 #dhclient 自动获取ip地址命令 #ifconfig 查询系统里网卡信息，ip地址、MAC地址 分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。 手动设置ip地址如果虚拟机不能自动获取IP，只能手动配置，配置方法如下： 输入命令 #vi /et">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-15T07:01:42.409Z">
+<meta property="og:updated_time" content="2018-04-15T17:28:55.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux常见命令">
 <meta name="twitter:description" content="手动配置IP地址自动获取IP地址虚拟机使用桥接模式，相当于连接到物理机的网络里，物理机网络有DHCP服务器自动分配IP地址。 #dhclient 自动获取ip地址命令 #ifconfig 查询系统里网卡信息，ip地址、MAC地址 分配到ip地址后，用物理机进行ping ip地址，检测是否ping通。 手动设置ip地址如果虚拟机不能自动获取IP，只能手动配置，配置方法如下： 输入命令 #vi /et">
@@ -508,6 +508,15 @@ nameserver 8.8.8.8
 -S：在备份文件时，用指定的后缀“SUFFIX”代替文件的默认后缀；
 -b：覆盖已存在的文件目标前将目标文件备份；
 -v：详细显示命令执行的操作。
+
+linux下cp整个文件夹的文件到另一个文件夹
+cp -ri A/B/* A1/B1/ 回车
+
+如果dir2目录不存在，则可以直接使用
+cp -r dir1 dir2
+即可。
+如果dir2目录已存在，则需要使用
+cp -r dir1/. dir2
 </code></pre><h2 id="文本编辑命令"><a href="#文本编辑命令" class="headerlink" title="文本编辑命令"></a>文本编辑命令</h2><h3 id="进入vi-vim的命令"><a href="#进入vi-vim的命令" class="headerlink" title="进入vi/vim的命令"></a>进入vi/vim的命令</h3><pre><code>vi/vim filename :打开或新建文件，并将光标置于第一行首
 vi/vim +n filename ：打开文件，并将光标置于第n行首
 vi/vim + filename ：打开文件，并将光标置于最后一行首
